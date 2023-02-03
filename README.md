@@ -1,6 +1,6 @@
 # GGJ2023Root
 
-Game about a biomas planting roots and digging into the earth, seeking resources
+Game about a biomass planting roots and digging into the earth, seeking resources
 
 The gameplay centers around guiding a root tendril into the earth.
 The tendril is guided using th left and right arrow keys.
