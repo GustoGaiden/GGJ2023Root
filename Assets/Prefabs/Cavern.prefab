@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 220046702380831704}
   - component: {fileID: 4344076726496739208}
   - component: {fileID: 8458745493479036104}
+  - component: {fileID: 5903686182766261183}
   m_Layer: 0
   m_Name: Cavern
   m_TagString: Untagged
@@ -138,6 +139,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e858d0a3dcf4a5419d58e19ca97d51a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerController: {fileID: 0}
+  ResourceNode: {fileID: 5903686182766261183}
 --- !u!50 &8458745493479036104
 Rigidbody2D:
   serializedVersion: 4
@@ -159,3 +162,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &5903686182766261183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450647545861622286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d4907fedee9c77db92b19d0a61d2c11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  State: 0
+  JuiceFlowRate: 0.05

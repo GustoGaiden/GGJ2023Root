@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,15 @@ public class JuiceManager : MonoBehaviour
     {
         CurrentJuice = Mathf.Max(CurrentJuice - value, 0f);
     }
+
+    public void AddJuiceForActiveResources(List<ResourceNode> resources)
+    {
+        foreach(ResourceNode resource in resources)
+        {
+            CurrentJuice = Mathf.Min(MaxJuice, CurrentJuice + resource.JuiceFlowRate);
+        }
+    }
+
 
     public bool isOutOfJuice()
     {
