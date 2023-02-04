@@ -175,7 +175,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         MovePlayer();
-        Debug.Log(state);
+        // Debug.Log(state);
     }
 
     void Update()
