@@ -18,7 +18,7 @@ public class JuiceManager : MonoBehaviour
         CurrentJuice = Mathf.Max(CurrentJuice - value, 0f);
     }
 
-    public bool isEmpty()
+    public bool isOutOfJuice()
     {
         return CurrentJuice <= 0;
     }

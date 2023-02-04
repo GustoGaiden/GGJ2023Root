@@ -23,11 +23,20 @@ public class GameManager : MonoBehaviour
     {
         CheckReset();
         JuiceManager.DepleteJuice(JuiceDepletionRate);
+        CheckJuiceEmpty();
     }
 
     void CheckReset()
     {
         if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Backspace))
+        {
+            StartNewRun();
+        }
+    }
+
+    void CheckJuiceEmpty()
+    {
+        if (JuiceManager.isOutOfJuice())
         {
             StartNewRun();
         }
@@ -38,4 +47,5 @@ public class GameManager : MonoBehaviour
         JuiceManager.resetToMax(MaxPlayerJuice);
         PlayerController.ResetForNewRun();
     }
+    
 }
