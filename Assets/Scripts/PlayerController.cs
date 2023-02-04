@@ -38,8 +38,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         UpdateMovementDirection();
-        CheckReset();
-
     }
 
     void MovePlayer()
@@ -60,9 +58,7 @@ public class PlayerController : MonoBehaviour
         {
             transform.Translate(movementDirection);
             history.Add(transform.position);
-
         }
-
     }
 
     void UpdateMovementDirection()
@@ -78,18 +74,14 @@ public class PlayerController : MonoBehaviour
         }
         movementDirection = Mathf.RoundToInt(Vector2.Angle(newDirection, Vector2.down)) <= maxAngle ? newDirection : movementDirection;
     }
-    void CheckReset()
+    
+    public void ResetForNewRun()
     {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            state = State.Traversing;
-            historyIndex = 0;
-            transform.position = history[historyIndex];
-
-        }
+        state = State.Traversing;
+        historyIndex = 0;
+        //transform.position = history[historyIndex];
     }
-
-
+    
     void DebugFun()
     {
         if (Input.GetKey(KeyCode.P))

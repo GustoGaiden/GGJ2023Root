@@ -7,21 +7,15 @@ public class JuiceManager : MonoBehaviour
     public Slider JuiceUiSlider;
     public float CurrentJuice;
     public float MaxJuice;
-    
-    private void Awake()
-    {
-        resetToMax(100f);
-    }
-    
+
     void Update()
     {
         JuiceUiSlider.value = CurrentJuice;
     }
 
-    public void DepleteJuice(float depleteValue)
+    public void DepleteJuice(float value)
     {
-        CurrentJuice -= depleteValue;
-        CurrentJuice = Mathf.Max(CurrentJuice -= depleteValue, 0f);
+        CurrentJuice = Mathf.Max(CurrentJuice - value, 0f);
     }
 
     public bool isEmpty()
@@ -32,6 +26,7 @@ public class JuiceManager : MonoBehaviour
     public void resetToMax(float newMaxValue)
     {
         MaxJuice = newMaxValue;
+        CurrentJuice = MaxJuice;
         JuiceUiSlider.maxValue = MaxJuice;
         JuiceUiSlider.value = MaxJuice;
     }

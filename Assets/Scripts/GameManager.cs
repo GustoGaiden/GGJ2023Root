@@ -1,36 +1,41 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
-    public GameObject PlayerController;
-    public List<GameObject> Caverns;
-    public int ConnectedCaverns;
-    public GameObject GameMapContainer;
-
-
+    public PlayerController PlayerController;
     public JuiceManager JuiceManager;
-
-    public float maxJuice = 100;
-
-    // Start is called before the first frame update
-
+    
+    public GameObject GameMapContainer;
+    public GameObject CavernsContainer;
+  
+    public float MaxPlayerJuice = 100f;
+    public float JuiceDepletionRate = 0.01f;
+    
+    public int ConnectedCaverns;
+    
     private void Awake()
     {
-        StartNewRun();   
+        StartNewRun();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        CheckReset();
+        JuiceManager.DepleteJuice(JuiceDepletionRate);
     }
 
+    void CheckReset()
+    {
+        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Backspace))
+        {
+            StartNewRun();
+        }
+    }
+    
     public void StartNewRun()
     {
-        JuiceManager.resetToMax(maxJuice);
+        JuiceManager.resetToMax(MaxPlayerJuice);
+        PlayerController.ResetForNewRun();
     }
 }
