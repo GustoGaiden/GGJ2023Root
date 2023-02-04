@@ -85,19 +85,19 @@ public List<float> gravelTierModifiers;
             switch (i)
             {
                 case 0:
-                    NewDirtTier.sprite.color = new Color(1,1,1,0.5f);
+                    NewDirtTier.sprite.color = new Color(1,1,1,0.1f);
                     break;
                 case 1:
-                    NewDirtTier.sprite.color = new Color(1,0,1,0.5f);
+                    NewDirtTier.sprite.color = new Color(1,0,1,0.1f);
                     break;
                 case 2:
-                    NewDirtTier.sprite.color = new Color(0,1,1,0.5f);
+                    NewDirtTier.sprite.color = new Color(0,1,1,0.1f);
                     break;
                 case 3:
-                    NewDirtTier.sprite.color = new Color(0,0,1,0.5f);;
+                    NewDirtTier.sprite.color = new Color(0,0,1,0.1f);;
                     break;
                 default:
-                    NewDirtTier.sprite.color = new Color(1,0,0,0.5f);;
+                    NewDirtTier.sprite.color = new Color(1,0,0,0.1f);;
                     break;
             }
 

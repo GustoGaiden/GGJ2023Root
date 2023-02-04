@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a58d8652fbb4421889772041a071dff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JuiceUiSlider: {fileID: 0}
+  JuiceUiSlider: {fileID: 1613279941}
   CurrentJuice: 0
   MaxJuice: 0
   LightMarkPrefab: {fileID: 8671834901620556561, guid: 4e335e00ee5bd4e97b24ea6c67b1c794, type: 3}
@@ -934,6 +934,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6523902397737826245, guid: 7a140392d65a7459bb75bc73ada058d2, type: 3}
   m_PrefabInstance: {fileID: 1613279937}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1613279941 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8948293562575847772, guid: 7a140392d65a7459bb75bc73ada058d2, type: 3}
+  m_PrefabInstance: {fileID: 1613279937}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1617038616
 GameObject:
   m_ObjectHideFlags: 0
@@ -1092,8 +1103,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1926556600}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -150, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -128, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 492906641}
@@ -1140,13 +1151,13 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -10
-  m_Sprite: {fileID: 21300000, guid: 477435b39712a980ab8f07ea978231d4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b43d8915900f0466b9be6ef438675470, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 100, y: 300}
-  m_AdaptiveModeThreshold: 0.5
+  m_Size: {x: 64, y: 128}
+  m_AdaptiveModeThreshold: 1
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
