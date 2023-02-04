@@ -6,23 +6,19 @@ using UnityEngine;
 
 public class CollisionLogic : MonoBehaviour
 {
-    void OnTriggerEnter2D(Collider2D collision) => HandleCollision(collision);
-
-    public PlayerController? PlayerController;
-    public ResourceNode? ResourceNode;
-
-    private void HandleCollision(Collider2D collision)
-    {
-        // Debug.Log($"Collision took place for obect {collision.name}");
-        if(PlayerController != null)
+    void OnCollisionEnter2D(Collision2D collision) {
+        Debug.Log("COLLIDED WITH SOMETHING : ME " + collision.collider.gameObject.name);
+        Debug.Log("COLLIDED WITH SOMETHING : OTHER " + collision.otherCollider.gameObject.name);
+        if (collision.collider.tag == "Cavern")
         {
-            // Debug.Log($"Collision handling for player object {collision.name}");
-            PlayerController.ResetForNewRun();
+            CavernDisplay cavern = collision.gameObject.GetComponent<CavernDisplay>();
+            cavern.isConnected = true;
+            Debug.Log($"cavern {cavern.name} is now active" );
         }
-        if(ResourceNode != null)
-        {
-            // Debug.Log("Resource getting activated!");
-            ResourceNode.ActivateResource();
-        }
+        // if(ResourceNode != null)
+        // {
+        //     Debug.Log("Resource getting activated!");
+        //     ResourceNode.ActivateResource();
+        // }
     }
 }

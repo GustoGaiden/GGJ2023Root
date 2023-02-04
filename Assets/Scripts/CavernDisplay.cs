@@ -5,6 +5,7 @@ using UnityEngine;
 public class CavernDisplay : MonoBehaviour
 {
     // Start is called before the first frame update
+    public bool isConnected = false;
     
     void Start()
     {

@@ -78,8 +78,8 @@ public List<float> gravelTierModifiers;
 
     private void regenerateDirt()
     {
-        removeChildrenOfContainer(DirtContainer);
-        destroyGameObjects(dirtTiers);
+        //removeChildrenOfContainer(DirtContainer);
+        //destroyGameObjects(dirtTiers);
 
         for (int i = 0; i < DirtTiersJuicePerSecond.Count; i++)
         {
@@ -116,7 +116,7 @@ public List<float> gravelTierModifiers;
     
     public void RegenerateWorld()
     {
-        destroyEverything();
+        // destroyEverything();
 
         tierSize = new Vector2(GameWorldBounds.size.x, GameWorldBounds.size.y / 4);
         
