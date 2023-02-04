@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 
@@ -159,6 +161,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 movementDirection = Vector2.down;
     private Tree treeHistory = new Tree();
     private State state = State.Exploring;
+    private List<string> drawnRoots = new List<string>();
 
     [Tooltip("Speed in units/second")]
     public float movementSpeed;
@@ -166,6 +169,8 @@ public class PlayerController : MonoBehaviour
     public float steeringSpeed;
     [Tooltip("Max angle in degrees")]
     public int maxAngle;
+    [Tooltip("Texture to draw a root")]
+    public RootBehaviour root;
 
     void Awake()
     {
@@ -181,10 +186,7 @@ public class PlayerController : MonoBehaviour
     {
         TriggerSplitBranch();
         UpdateMovementDirection();
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            PrintPaths(treeHistory.root, 0);
-        }
+        PrintPaths(treeHistory.root, 0);
     }
 
     void MovePlayer()
@@ -212,8 +214,19 @@ public class PlayerController : MonoBehaviour
         if (state == State.Exploring)
         {
             transform.Translate(movementDirection);
-            treeHistory.current.path.Add(transform.position);
-
+            List<Vector2> path = treeHistory.current.path; 
+            if (path.Count > 0)
+            {
+                float dist = Vector2.Distance(path[path.Count-1], transform.position);
+                if (dist > 0.1)
+                {
+                    treeHistory.current.path.Add(transform.position);    
+                }
+            }
+            else
+            {
+                treeHistory.current.path.Add(transform.position);    
+            }
         }
     }
     void TriggerSplitBranch()
@@ -255,8 +268,7 @@ public class PlayerController : MonoBehaviour
         //transform.position = history[historyIndex];
     }
 
-
-    void PrintPaths(Node node, int i)
+    public void PrintPaths(Node node, int i)
     {
         if (node.HasLeft())
         {
@@ -268,10 +280,16 @@ public class PlayerController : MonoBehaviour
         }
         if (!node.HasLeaves())
         {
+            int counter = 0;
             foreach (Vector2 point in node.path)
             {
-                GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                Instantiate(cube, point, Quaternion.identity);
+                counter++;
+                string rootId = i.ToString() + '#' + counter.ToString();
+                if (!drawnRoots.Contains(rootId))
+                {
+                    RootBehaviour instance = Instantiate<RootBehaviour>(root, point, Quaternion.identity);
+                    drawnRoots.Add(rootId);
+                }
             }
         }
     }
