@@ -19,15 +19,6 @@ public class JuiceManager : MonoBehaviour
         CurrentJuice = Mathf.Max(CurrentJuice - value, 0f);
     }
 
-    public void AddJuiceForActiveResources(List<ResourceNode> resources)
-    {
-        foreach(ResourceNode resource in resources)
-        {
-            CurrentJuice = Mathf.Min(MaxJuice, CurrentJuice + resource.JuiceFlowRate);
-        }
-    }
-
-
     public bool isOutOfJuice()
     {
         return CurrentJuice <= 0;
@@ -35,6 +26,7 @@ public class JuiceManager : MonoBehaviour
 
     public void resetToMax(float newMaxValue)
     {
+        Debug.Log($"Reset to max. Old Max = {MaxJuice} and New Max = {newMaxValue}");
         MaxJuice = newMaxValue;
         CurrentJuice = MaxJuice;
         JuiceUiSlider.maxValue = MaxJuice;

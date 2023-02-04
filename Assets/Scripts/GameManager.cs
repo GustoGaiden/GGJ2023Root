@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject GameMapContainer;
     public GameObject CavernsContainer;
   
-    public float MaxPlayerJuice = 100f;
+    public float InitialMaxJuice = 100f;
     public float JuiceDepletionRate = 0.01f;
     
     public int ConnectedCaverns;
@@ -24,13 +24,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        CheckResets();
+        CheckManualResets();
         JuiceManager.DepleteJuice(JuiceDepletionRate);
-        JuiceManager.AddJuiceForActiveResources(ResourceNodeManager.ActiveResources);
         CheckJuiceEmpty();
     }
 
-    void CheckResets()
+    void CheckManualResets()
     {
         if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Backspace))
         {
@@ -53,7 +52,7 @@ public class GameManager : MonoBehaviour
     
     public void StartNewRun()
     {
-        JuiceManager.resetToMax(MaxPlayerJuice);
+        JuiceManager.resetToMax(InitialMaxJuice + ResourceNodeManager.GetMaxJuiceIncrease());
         PlayerController.ResetForNewRun();
     }
     
