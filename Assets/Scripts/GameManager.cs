@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public GameObject GameMapContainer;
     public GameObject CavernsContainer;
 
+    public JuiceDisplay JuiceDisplay;
+
     public Slider JuiceUiSlider;
 
     
@@ -66,7 +68,6 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Reset to max. Old Max = {Juice.MaxJuice} and New Max = {newMaxValue}");
         Juice.MaxJuice = newMaxValue;
         Juice.CurrentJuice = Juice.MaxJuice;
-        JuiceUiSlider.maxValue = Juice.MaxJuice;
-        JuiceUiSlider.value = Juice.MaxJuice;
+        JuiceDisplay.ResetToMax();
     }
 }
