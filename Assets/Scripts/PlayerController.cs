@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+enum State
+{
+    Exploring,
+    Traversing,
+}
+
 public class PlayerController : MonoBehaviour
 {
     private Vector2 movementDirection = Vector2.down;
