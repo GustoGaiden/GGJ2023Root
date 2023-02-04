@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6736753854764369045}
   - component: {fileID: 220046702380831704}
   - component: {fileID: 5903686182766261183}
-  - component: {fileID: 1535776135}
   m_Layer: 0
   m_Name: Cavern
   m_TagString: Cavern
@@ -141,24 +140,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   State: 0
   JuiceFlowRate: 0.05
---- !u!50 &1535776135
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1450647545861622286}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0

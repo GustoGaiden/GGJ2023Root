@@ -11,8 +11,7 @@ public enum ResourceNodeState {
 public class ResourceNode : MonoBehaviour
 {
     public ResourceNodeState State = ResourceNodeState.AVAILABLE;
-    // float AvailableJuice = 30f;
-    public float JuiceFlowRate = 0.0035f;
+    public float MaxJuiceIncrease = 30f;
 
     public void ActivateResource()
     {

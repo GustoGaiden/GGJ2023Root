@@ -13,4 +13,14 @@ public class ResourceNodeManager : MonoBehaviour
             return AllResources.FindAll((resource) => resource.State == ResourceNodeState.ACTIVE);
         }
     }
+
+    public float GetMaxJuiceIncrease()
+    {
+        float output = 0;
+        foreach(ResourceNode resource in ActiveResources)
+        {
+            output = output + resource.MaxJuiceIncrease;
+        }
+        return output;
+    }
 }

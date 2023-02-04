@@ -2,23 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-#nullable enable
-
 public class CollisionLogic : MonoBehaviour
 {
+    public PlayerController PlayerController;
     void OnCollisionEnter2D(Collision2D collision) {
-        Debug.Log("COLLIDED WITH SOMETHING : ME " + collision.collider.gameObject.name);
-        Debug.Log("COLLIDED WITH SOMETHING : OTHER " + collision.otherCollider.gameObject.name);
+        // Debug.Log("Collision.collider:" + collision.collider.gameObject.name);
+        // Debug.Log("Collision.collider.other" + collision.otherCollider.gameObject.name);
         if (collision.collider.tag == "Cavern")
         {
-            CavernDisplay cavern = collision.gameObject.GetComponent<CavernDisplay>();
-            cavern.isConnected = true;
+            ResourceNode cavern = collision.gameObject.GetComponent<ResourceNode>();
+            cavern.ActivateResource();
             Debug.Log($"cavern {cavern.name} is now active" );
         }
-        // if(ResourceNode != null)
-        // {
-        //     Debug.Log("Resource getting activated!");
-        //     ResourceNode.ActivateResource();
-        // }
+        PlayerController.ResetForNewRun();
     }
 }
