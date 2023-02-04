@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
 {
     private Vector2 movementDirection = Vector2.down;
     private List<Vector2> travelHistory = new List<Vector2>();
+    private State state = State.Exploring;
+    private Vector2 startingPosition = new Vector2(0, 0);
+
     [Tooltip("Speed in units/second")]
     public float movementSpeed;
     [Tooltip("Rotational speed in degrees per second")]
@@ -35,6 +38,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         movementDirection = UpdateDirection();
+        CheckReset();
 
     }
 
@@ -50,6 +54,14 @@ public class PlayerController : MonoBehaviour
             newDirection = Quaternion.AngleAxis(steeringSpeed * Time.deltaTime, Vector3.forward) * movementDirection;
         }
         return Mathf.RoundToInt(Vector2.Angle(newDirection, Vector2.down)) <= maxAngle ? newDirection : movementDirection;
+    }
+    void CheckReset()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            state = State.Traversing;
+            transform.position = startingPosition;
+        }
     }
 
     void UpdateHistory()
