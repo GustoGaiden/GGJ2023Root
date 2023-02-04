@@ -1,14 +1,17 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public PlayerController PlayerController;
-    public JuiceManager JuiceManager;
     public ResourceNodeManager ResourceNodeManager;
     public DirtManager DirtManager;
     public RootTextureController RootTextureController;
     public GameObject GameMapContainer;
     public GameObject CavernsContainer;
+
+    public Slider JuiceUiSlider;
+
   
     public float InitialMaxJuice = 100f;
     public float JuiceDepletionRate = 0.01f;
@@ -25,7 +28,6 @@ public class GameManager : MonoBehaviour
     void FixedUpdate()
     {
         CheckManualResets();
-        JuiceManager.DepleteJuice(JuiceDepletionRate);
         CheckJuiceEmpty();
     }
 
@@ -44,7 +46,7 @@ public class GameManager : MonoBehaviour
 
     void CheckJuiceEmpty()
     {
-        if (JuiceManager.isOutOfJuice())
+        if (Juice.CurrentJuice <= 0f)
         {
             StartNewRun();
         }
@@ -52,8 +54,20 @@ public class GameManager : MonoBehaviour
     
     public void StartNewRun()
     {
-        JuiceManager.resetToMax(InitialMaxJuice + ResourceNodeManager.GetMaxJuiceIncrease());
+        ResetJuiceToMax(InitialMaxJuice + ResourceNodeManager.GetMaxJuiceIncrease());
         PlayerController.ResetForNewRun();
     }
+
+    public void DepleteJuice(float JuiceDepletionRate) {
+        Juice.CurrentJuice = Mathf.Max(Juice.CurrentJuice - float.MaxValue, 0f);
+        JuiceUiSlider.value = Juice.CurrentJuice;
+    }
+    public void ResetJuiceToMax(float newMaxValue)
+    {
+        Debug.Log($"Reset to max. Old Max = {Juice.MaxJuice} and New Max = {newMaxValue}");
+        Juice.MaxJuice = newMaxValue;
+        Juice.CurrentJuice = Juice.MaxJuice;
+        JuiceUiSlider.maxValue = Juice.MaxJuice;
+        JuiceUiSlider.value = Juice.MaxJuice;    }
     
 }

@@ -677,7 +677,7 @@ MonoBehaviour:
   RootTextureController: {fileID: 1822760419}
   GameMapContainer: {fileID: 492906640}
   CavernsContainer: {fileID: 595332925}
-  MaxPlayerJuice: 100
+  InitialMaxJuice: 100
   JuiceDepletionRate: 0.01
   ConnectedCaverns: 0
 --- !u!1001 &950042933
