@@ -214,19 +214,8 @@ public class PlayerController : MonoBehaviour
         if (state == State.Exploring)
         {
             transform.Translate(movementDirection);
-            List<Vector2> path = treeHistory.current.path; 
-            if (path.Count > 0)
-            {
-                float dist = Vector2.Distance(path[path.Count-1], transform.position);
-                if (dist > 0.1)
-                {
-                    treeHistory.current.path.Add(transform.position);    
-                }
-            }
-            else
-            {
-                treeHistory.current.path.Add(transform.position);    
-            }
+            List<Vector2> path = treeHistory.current.path;
+            treeHistory.current.path.Add(transform.position);
         }
     }
     void TriggerSplitBranch()
@@ -285,7 +274,7 @@ public class PlayerController : MonoBehaviour
             {
                 counter++;
                 string rootId = i.ToString() + '#' + counter.ToString();
-                if (!drawnRoots.Contains(rootId))
+                if (!drawnRoots.Contains(rootId) && counter % 4 == 0)
                 {
                     RootBehaviour instance = Instantiate<RootBehaviour>(root, point, Quaternion.identity);
                     drawnRoots.Add(rootId);
