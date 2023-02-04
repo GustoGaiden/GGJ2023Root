@@ -159,6 +159,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8948293562575847775}
   - component: {fileID: 8948293562575847772}
+  - component: {fileID: 8377487684211402333}
   m_Layer: 5
   m_Name: JuiceDisplay
   m_TagString: Untagged
@@ -240,6 +241,23 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8377487684211402333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8948293562575847774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4450f6cb3bd1efa0094109b621ebd436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LightMarkPrefab: {fileID: 8671834901620556561, guid: 4e335e00ee5bd4e97b24ea6c67b1c794, type: 3}
+  DarkMarkPrefab: {fileID: 5351640221960875070, guid: 54354681e3f654c1d8592f7d43a2573f, type: 3}
+  MarkerContainer: {fileID: 6523902397737826245}
+  LightMarkInterval: 10
+  DarkMarkInterval: 10
 --- !u!1 &8948293562957242134
 GameObject:
   m_ObjectHideFlags: 0

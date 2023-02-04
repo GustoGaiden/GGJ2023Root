@@ -11,11 +11,6 @@ public class GameManager : MonoBehaviour
     public GameObject CavernsContainer;
 
     public JuiceDisplay JuiceDisplay;
-
-    public Slider JuiceUiSlider;
-
-    
-    public int ConnectedCaverns;
     
     private void Awake()
     {
@@ -60,7 +55,6 @@ public class GameManager : MonoBehaviour
 
     public void DepleteJuice(float JuiceDepletionRate) {
         Juice.CurrentJuice = Mathf.Max(Juice.CurrentJuice - JuiceDepletionRate, 0f);
-        JuiceUiSlider.value = Juice.CurrentJuice;
     }
     public void ResetJuiceToMax(float newMaxValue)
     {

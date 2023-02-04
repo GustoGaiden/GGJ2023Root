@@ -141,59 +141,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 
---- !u!1 &197721709
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 197721711}
-  - component: {fileID: 197721710}
-  m_Layer: 0
-  m_Name: JuiceManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &197721710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 197721709}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a58d8652fbb4421889772041a071dff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  JuiceUiSlider: {fileID: 1613279941}
-  CurrentJuice: 0
-  MaxJuice: 0
-  LightMarkPrefab: {fileID: 8671834901620556561, guid: 4e335e00ee5bd4e97b24ea6c67b1c794, type: 3}
-  DarkMarkPrefab: {fileID: 5351640221960875070, guid: 54354681e3f654c1d8592f7d43a2573f, type: 3}
-  MarkerContainer: {fileID: 1613279939}
-  DeltaMaker: {x: 0, y: 0}
-  LightMarkInterval: 10
-  DarkMarkInterval: 10
---- !u!4 &197721711
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 197721709}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &199935441
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,7 +184,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &232729552 stripped
 MonoBehaviour:
@@ -263,7 +210,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5179420965883273174, guid: 40aca6b859c004ea59c4ed6c722db595, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5179420965883273174, guid: 40aca6b859c004ea59c4ed6c722db595, type: 3}
       propertyPath: m_LocalPosition.x
@@ -407,7 +354,7 @@ Transform:
   - {fileID: 1106996721}
   - {fileID: 1796600551}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &533598137
 GameObject:
@@ -503,7 +450,7 @@ RectTransform:
   m_Children:
   - {fileID: 1613279938}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -590,15 +537,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerController: {fileID: 232729552}
-  JuiceManager: {fileID: 197721710}
   ResourceNodeManager: {fileID: 199935442}
   DirtManager: {fileID: 1267715289}
   RootTextureController: {fileID: 1822760419}
   GameMapContainer: {fileID: 492906640}
   CavernsContainer: {fileID: 595332925}
-  InitialMaxJuice: 100
-  JuiceDepletionRate: 0.01
-  ConnectedCaverns: 0
+  JuiceDisplay: {fileID: 1613279939}
 --- !u!1001 &950042933
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -817,7 +761,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1613279937
 PrefabInstance:
@@ -929,20 +873,15 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8948293562575847775, guid: 7a140392d65a7459bb75bc73ada058d2, type: 3}
   m_PrefabInstance: {fileID: 1613279937}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1613279939 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6523902397737826245, guid: 7a140392d65a7459bb75bc73ada058d2, type: 3}
-  m_PrefabInstance: {fileID: 1613279937}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1613279941 stripped
+--- !u!114 &1613279939 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8948293562575847772, guid: 7a140392d65a7459bb75bc73ada058d2, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8377487684211402333, guid: 7a140392d65a7459bb75bc73ada058d2, type: 3}
   m_PrefabInstance: {fileID: 1613279937}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 4450f6cb3bd1efa0094109b621ebd436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1617038616
@@ -1076,7 +1015,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1926556600
 GameObject:
@@ -1307,7 +1246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8935737449249911112, guid: b646c647daed94cbfa4c17f1c1728441, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8935737449249911112, guid: b646c647daed94cbfa4c17f1c1728441, type: 3}
       propertyPath: m_LocalPosition.x
