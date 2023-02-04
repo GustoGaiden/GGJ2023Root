@@ -49,18 +49,17 @@ public List<float> gravelTierModifiers;
     {
         
     }
-
-    private void removeChildrenOfContainer(GameObject container) {
-        foreach (Transform obj in container.transform)
-        {
-            obj.parent = null;
-        }
-    }
-
+    
     private void destroyGameObjects(List<GameObject> objList)
     {
-        foreach (var obj     in objList)
+        if (objList == null)
         {
+            objList = new List<GameObject>();
+        }
+        
+        foreach (GameObject obj in objList)
+        {
+            obj.transform.SetParent(null);
             Destroy(obj);            
         }
         objList.RemoveRange(0, objList.Count);
@@ -68,9 +67,6 @@ public List<float> gravelTierModifiers;
 
     private void destroyEverything()
     {
-        removeChildrenOfContainer(DirtContainer);
-        removeChildrenOfContainer(GravelContainer);
-        removeChildrenOfContainer(CavernContainer);
         destroyGameObjects(dirtTiers);
         destroyGameObjects(gravelBlobs);
         destroyGameObjects(caverns);
@@ -78,8 +74,7 @@ public List<float> gravelTierModifiers;
 
     private void regenerateDirt()
     {
-        //removeChildrenOfContainer(DirtContainer);
-        //destroyGameObjects(dirtTiers);
+        destroyGameObjects(dirtTiers);
 
         for (int i = 0; i < DirtTiersJuicePerSecond.Count; i++)
         {
@@ -116,7 +111,7 @@ public List<float> gravelTierModifiers;
     
     public void RegenerateWorld()
     {
-        // destroyEverything();
+        destroyEverything();
 
         tierSize = new Vector2(GameWorldBounds.size.x, GameWorldBounds.size.y / 4);
         
