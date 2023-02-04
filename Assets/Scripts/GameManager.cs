@@ -12,9 +12,6 @@ public class GameManager : MonoBehaviour
 
     public Slider JuiceUiSlider;
 
-  
-    public float InitialMaxJuice = 100f;
-    public float JuiceDepletionRate = 0.01f;
     
     public int ConnectedCaverns;
     
@@ -28,6 +25,7 @@ public class GameManager : MonoBehaviour
     void FixedUpdate()
     {
         CheckManualResets();
+        DepleteJuice(Juice.JuiceDepletionRate);
         CheckJuiceEmpty();
     }
 
@@ -54,20 +52,21 @@ public class GameManager : MonoBehaviour
     
     public void StartNewRun()
     {
-        ResetJuiceToMax(InitialMaxJuice + ResourceNodeManager.GetMaxJuiceIncrease());
+        ResetJuiceToMax(Juice.InitialMaxJuice + ResourceNodeManager.GetMaxJuiceIncrease());
         PlayerController.ResetForNewRun();
     }
 
     public void DepleteJuice(float JuiceDepletionRate) {
-        Juice.CurrentJuice = Mathf.Max(Juice.CurrentJuice - float.MaxValue, 0f);
+        Juice.CurrentJuice = Mathf.Max(Juice.CurrentJuice - JuiceDepletionRate, 0f);
         JuiceUiSlider.value = Juice.CurrentJuice;
     }
     public void ResetJuiceToMax(float newMaxValue)
     {
+        Debug.Log($"Current Juice: ${Juice.CurrentJuice}");
         Debug.Log($"Reset to max. Old Max = {Juice.MaxJuice} and New Max = {newMaxValue}");
         Juice.MaxJuice = newMaxValue;
         Juice.CurrentJuice = Juice.MaxJuice;
         JuiceUiSlider.maxValue = Juice.MaxJuice;
-        JuiceUiSlider.value = Juice.MaxJuice;    }
-    
+        JuiceUiSlider.value = Juice.MaxJuice;
+    }
 }
