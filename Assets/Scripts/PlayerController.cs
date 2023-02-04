@@ -39,7 +39,10 @@ public class Node
     }
     public Vector2 GetLatestPosition()
     {
-        return path[pathIndex];
+        Debug.Log("----");
+        Debug.Log(path.Count);
+        Debug.Log(pathIndex);
+        return path[pathIndex - 1];
     }
     public void Reset()
     {
@@ -47,11 +50,11 @@ public class Node
     }
     public bool HasLeft()
     {
-        return left != null;
+        return left != null && left.path.Count != 0;
     }
     public bool HasRight()
     {
-        return right != null;
+        return right != null && right.path.Count != 1;
     }
     public bool HasLeaves()
     {
@@ -89,10 +92,6 @@ public class Tree
     {
         // historyIndex++;
         current.pathIndex++;
-    }
-    public Vector2 GetLatestPosition()
-    {
-        return current.GetLatestPosition();
     }
     public void BufferInput()
     {
@@ -138,7 +137,7 @@ public class Tree
 
         Node shortenedNode = current.Copy();
         List<Vector2> remainingPath = current.path.GetRange(current.pathIndex, current.path.Count - current.pathIndex);
-        shortenedNode.path = remainingPath;
+        shortenedNode.path.RemoveRange(0, current.pathIndex - 1);
 
         if (input == BufferedInput.Left)
         {
@@ -197,12 +196,12 @@ public class PlayerController : MonoBehaviour
             if (treeHistory.current.IsPathNotEmpty())
             {
                 treeHistory.ContinueOnBranch();
-                transform.position = treeHistory.GetLatestPosition();
+                transform.position = treeHistory.current.GetLatestPosition();
             }
             else if (treeHistory.current.HasLeaves())
             {
                 treeHistory.SwitchBranch();
-                transform.position = treeHistory.GetLatestPosition();
+                transform.position = treeHistory.current.GetLatestPosition();
             }
             else
             {
