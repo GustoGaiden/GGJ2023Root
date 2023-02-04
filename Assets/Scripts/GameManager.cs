@@ -4,8 +4,9 @@ public class GameManager : MonoBehaviour
 {
     public PlayerController PlayerController;
     public JuiceManager JuiceManager;
+    public ResourceNodeManager ResourceNodeManager;
     public DirtManager DirtManager;
-    
+
     public GameObject GameMapContainer;
     public GameObject CavernsContainer;
   
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
     {
         CheckResets();
         JuiceManager.DepleteJuice(JuiceDepletionRate);
+        JuiceManager.AddJuiceForActiveResources(ResourceNodeManager.ActiveResources);
         CheckJuiceEmpty();
     }
 
@@ -34,7 +36,7 @@ public class GameManager : MonoBehaviour
         {
             StartNewRun();
         }
-        
+
         if (Input.GetKey(KeyCode.R))
         {
             DirtManager.RegenerateWorld();
