@@ -254,6 +254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e858d0a3dcf4a5419d58e19ca97d51a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerController: {fileID: 367331818}
 --- !u!50 &367331823
 Rigidbody2D:
   serializedVersion: 4
@@ -437,7 +438,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7249388444307893305, guid: 43ae57bf9ae8e482cacc6b8afdf05903, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.41
+      value: -4.87
       objectReference: {fileID: 0}
     - target: {fileID: 7249388444307893305, guid: 43ae57bf9ae8e482cacc6b8afdf05903, type: 3}
       propertyPath: m_LocalPosition.z

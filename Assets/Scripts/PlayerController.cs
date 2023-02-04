@@ -39,9 +39,9 @@ public class Node
     }
     public Vector2 GetLatestPosition()
     {
-        Debug.Log("----");
-        Debug.Log(path.Count);
-        Debug.Log(pathIndex);
+        // Debug.Log("----");
+        // Debug.Log(path.Count);
+        // Debug.Log(pathIndex);
         return path[pathIndex - 1];
     }
     public void Reset()
@@ -254,17 +254,17 @@ public class PlayerController : MonoBehaviour
     {
         if (node.HasLeft())
         {
-            Debug.Log($"{i} -has Left");
+            // Debug.Log($"{i} -has Left");
             PrintPaths(node.left, i++);
         }
         if (node.HasRight())
         {
-            Debug.Log($"{i} -has Right");
+            // Debug.Log($"{i} -has Right");
             PrintPaths(node.right, i++);
         }
         if (!node.HasLeaves())
         {
-            Debug.Log($"{i} -has Nothing");
+            // Debug.Log($"{i} -has Nothing");
             foreach (Vector2 point in node.path)
             {
                 GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
