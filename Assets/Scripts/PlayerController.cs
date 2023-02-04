@@ -187,8 +187,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         UpdateMovementDirection();
-        CheckReset();
-
     }
 
     void MovePlayer()
@@ -218,7 +216,6 @@ public class PlayerController : MonoBehaviour
             treeHistory.current.path.Add(transform.position);
 
         }
-
     }
 
     void UpdateMovementDirection()
@@ -245,13 +242,12 @@ public class PlayerController : MonoBehaviour
         }
         movementDirection = Mathf.RoundToInt(Vector2.Angle(newDirection, Vector2.down)) <= maxAngle ? newDirection : movementDirection;
     }
-    void CheckReset()
+
+    public void ResetForNewRun()
     {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            state = State.Traversing;
-            treeHistory.ResetToRoot();
-        }
+        state = State.Traversing;
+        treeHistory.ResetToRoot();
+        //transform.position = history[historyIndex];
     }
 
 
