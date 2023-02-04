@@ -39,9 +39,6 @@ public class Node
     }
     public Vector2 GetLatestPosition()
     {
-        Debug.Log("----");
-        Debug.Log(path.Count);
-        Debug.Log(pathIndex);
         return path[pathIndex - 1];
     }
     public void Reset()
@@ -54,7 +51,7 @@ public class Node
     }
     public bool HasRight()
     {
-        return right != null && right.path.Count != 1;
+        return right != null && right.path.Count != 0;
     }
     public bool HasLeaves()
     {
@@ -63,6 +60,10 @@ public class Node
     public Node Copy()
     {
         return new Node(path, left, right);
+    }
+    public Node GetOnlyChild()
+    {
+        return left == null ? right : left;
     }
 
 }
@@ -100,22 +101,21 @@ public class Tree
     }
     public void SwitchBranch()
     {
-        if (bufferedInput == BufferedInput.Left)
+        switch (bufferedInput)
         {
-            current = current.left;
-            current.Reset();
+            case BufferedInput.Left:
+                current = current.left;
+                current.Reset();
+                break;
+            case BufferedInput.Right:
+                current = current.right;
+                current.Reset();
+                break;
+            case BufferedInput.Neither:
+                current = current.left;
+                current.Reset();
+                break;
         }
-        else if (bufferedInput == BufferedInput.Right)
-        {
-            current = current.right;
-            current.Reset();
-        }
-        else if (bufferedInput == BufferedInput.Neither)
-        {
-            current = current.left;
-            current.Reset();
-        }
-
     }
     public void CreateBranch()
     {
@@ -131,25 +131,24 @@ public class Tree
 
     public void SplitBranch(BufferedInput input)
     {
-        Node originalNode = current;
         List<Vector2> previousPath = current.path.GetRange(0, current.pathIndex);
-        originalNode.path = previousPath;
+        List<Vector2> remainingPath = current.path.GetRange(current.pathIndex, current.path.Count - current.pathIndex - 1);
+        current.path = previousPath;
 
         Node shortenedNode = current.Copy();
-        List<Vector2> remainingPath = current.path.GetRange(current.pathIndex, current.path.Count - current.pathIndex);
-        shortenedNode.path.RemoveRange(0, current.pathIndex - 1);
+        shortenedNode.path = remainingPath;
 
         if (input == BufferedInput.Left)
         {
-            originalNode.right = shortenedNode;
-            originalNode.left = new Node();
-            current = originalNode.left;
+            current.right = shortenedNode;
+            current.left = new Node();
+            current = current.left;
         }
         else if (input == BufferedInput.Right)
         {
-            originalNode.left = shortenedNode;
-            originalNode.right = new Node();
-            current = originalNode.right;
+            current.left = shortenedNode;
+            current.right = new Node();
+            current = current.right;
         }
     }
 
@@ -160,7 +159,6 @@ public class PlayerController : MonoBehaviour
     private Vector2 movementDirection = Vector2.down;
     private Tree treeHistory = new Tree();
     private State state = State.Exploring;
-    private Vector2 startingPosition = new Vector2(0, 0);
 
     [Tooltip("Speed in units/second")]
     public float movementSpeed;
@@ -177,15 +175,17 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         MovePlayer();
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            PrintPaths(treeHistory.root, 0);
-        }
+        Debug.Log(state);
     }
 
     void Update()
     {
+        TriggerSplitBranch();
         UpdateMovementDirection();
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            PrintPaths(treeHistory.root, 0);
+        }
     }
 
     void MovePlayer()
@@ -205,6 +205,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                movementDirection = Vector2.down * movementSpeed;
                 treeHistory.CreateBranch();
                 state = State.Exploring;
             }
@@ -216,26 +217,32 @@ public class PlayerController : MonoBehaviour
 
         }
     }
+    void TriggerSplitBranch()
+    {
+        if ((Input.GetKeyDown(KeyCode.A) && Input.GetKey(KeyCode.LeftShift)) || Input.GetKey(KeyCode.A) && Input.GetKeyDown(KeyCode.LeftShift) && state == State.Traversing)
+        {
+            state = State.Exploring;
+            treeHistory.SplitBranch(BufferedInput.Left);
+
+        }
+        if ((Input.GetKeyDown(KeyCode.D) && Input.GetKey(KeyCode.LeftShift)) || Input.GetKey(KeyCode.D) && Input.GetKeyDown(KeyCode.LeftShift) && state == State.Traversing)
+        {
+            state = State.Exploring;
+            treeHistory.SplitBranch(BufferedInput.Right);
+
+        }
+    }
 
     void UpdateMovementDirection()
     {
         Vector2 newDirection = movementDirection;
         //FIXME
-        // if ((Input.GetKeyDown(KeyCode.A) && Input.GetKey(KeyCode.LeftShift)) || Input.GetKey(KeyCode.A) && Input.GetKeyDown(KeyCode.LeftShift))
-        // {
-        //     treeHistory.SplitBranch(BufferedInput.Left);
-        //     state = State.Exploring;
-        // }
-        // if ((Input.GetKeyDown(KeyCode.D) && Input.GetKey(KeyCode.LeftShift)) || Input.GetKey(KeyCode.D) && Input.GetKeyDown(KeyCode.LeftShift))
-        // {
-        //     treeHistory.SplitBranch(BufferedInput.Right);
-        //     state = State.Exploring;
-        // }
-        if (Input.GetKey(KeyCode.A))
+
+        if (Input.GetKey(KeyCode.A) && state == State.Exploring)
         {
             newDirection = Quaternion.AngleAxis(-steeringSpeed * Time.deltaTime, Vector3.forward) * movementDirection;
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D) && state == State.Exploring)
         {
             newDirection = Quaternion.AngleAxis(steeringSpeed * Time.deltaTime, Vector3.forward) * movementDirection;
         }
@@ -244,8 +251,8 @@ public class PlayerController : MonoBehaviour
 
     public void ResetForNewRun()
     {
-        state = State.Traversing;
         treeHistory.ResetToRoot();
+        state = State.Traversing;
         //transform.position = history[historyIndex];
     }
 
@@ -254,17 +261,14 @@ public class PlayerController : MonoBehaviour
     {
         if (node.HasLeft())
         {
-            Debug.Log($"{i} -has Left");
             PrintPaths(node.left, i++);
         }
         if (node.HasRight())
         {
-            Debug.Log($"{i} -has Right");
             PrintPaths(node.right, i++);
         }
         if (!node.HasLeaves())
         {
-            Debug.Log($"{i} -has Nothing");
             foreach (Vector2 point in node.path)
             {
                 GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
