@@ -11,6 +11,7 @@ enum State
 public class PlayerController : MonoBehaviour
 {
     private Vector2 movementDirection = Vector2.down;
+    private List<Vector2> travelHistory = new List<Vector2>();
     [Tooltip("Speed in units/second")]
     public float movementSpeed;
     [Tooltip("Rotational speed in degrees per second")]
@@ -27,6 +28,8 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         transform.Translate(movementDirection);
+        UpdateHistory();
+        DebugFun();
     }
 
     void Update()
@@ -47,6 +50,22 @@ public class PlayerController : MonoBehaviour
             newDirection = Quaternion.AngleAxis(steeringSpeed * Time.deltaTime, Vector3.forward) * movementDirection;
         }
         return Mathf.RoundToInt(Vector2.Angle(newDirection, Vector2.down)) <= maxAngle ? newDirection : movementDirection;
+    }
 
+    void UpdateHistory()
+    {
+        travelHistory.Add(transform.position);
+    }
+
+    void DebugFun()
+    {
+        if (Input.GetKey(KeyCode.P))
+        {
+            foreach (Vector2 point in travelHistory)
+            {
+                GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                Instantiate(cube, point, Quaternion.identity);
+            }
+        }
     }
 }
