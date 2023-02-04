@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 76eaeb5eec9174c1e8c52ad3e35082ee
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - myGUITexture: {fileID: 2800000, guid: fa6a4890eaa844a69a7ea10ea0fb6900, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

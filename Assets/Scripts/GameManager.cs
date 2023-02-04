@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
     public JuiceManager JuiceManager;
     public ResourceNodeManager ResourceNodeManager;
     public DirtManager DirtManager;
-
+    public RootTextureController RootTextureController;
     public GameObject GameMapContainer;
     public GameObject CavernsContainer;
   
