@@ -12,7 +12,7 @@ public class CollisionLogic : MonoBehaviour
     {
         if(PlayerController != null)
         {
-            Debug.Log($"Collision handling for player object {collision.name}");
+            // Debug.Log($"Collision handling for player object {collision.name}");
             PlayerController.ResetForNewRun();
         }
     }
