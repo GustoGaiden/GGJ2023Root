@@ -254,7 +254,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e858d0a3dcf4a5419d58e19ca97d51a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerController: {fileID: 367331818}
 --- !u!50 &367331823
 Rigidbody2D:
   serializedVersion: 4
@@ -263,14 +262,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 367331816}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.0001
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -404,10 +403,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 220046702380831704, guid: 43ae57bf9ae8e482cacc6b8afdf05903, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 905585767537048915, guid: 43ae57bf9ae8e482cacc6b8afdf05903, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -424,10 +419,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cavern
       objectReference: {fileID: 0}
-    - target: {fileID: 6736753854764369045, guid: 43ae57bf9ae8e482cacc6b8afdf05903, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7249388444307893305, guid: 43ae57bf9ae8e482cacc6b8afdf05903, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -438,7 +429,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7249388444307893305, guid: 43ae57bf9ae8e482cacc6b8afdf05903, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.87
+      value: -1.591
       objectReference: {fileID: 0}
     - target: {fileID: 7249388444307893305, guid: 43ae57bf9ae8e482cacc6b8afdf05903, type: 3}
       propertyPath: m_LocalPosition.z
@@ -473,12 +464,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8458745493479036104, guid: 43ae57bf9ae8e482cacc6b8afdf05903, type: 3}
-      propertyPath: m_BodyType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8458745493479036104, guid: 43ae57bf9ae8e482cacc6b8afdf05903, type: 3}
       propertyPath: m_Simulated
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43ae57bf9ae8e482cacc6b8afdf05903, type: 3}
