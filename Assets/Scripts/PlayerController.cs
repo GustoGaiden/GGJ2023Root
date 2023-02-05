@@ -43,7 +43,7 @@ public class Node
     }
     public Vector2 GetLatestPosition()
     {
-        return path[pathIndex - 1];
+        return path[(pathIndex - 1) < 0 ? 0 : (pathIndex - 1)];
     }
     public void AddPosition(Vector2 position)
     {
@@ -209,6 +209,8 @@ public class PlayerController : MonoBehaviour
             else if (treeHistory.current.HasLeaves())
             {
                 treeHistory.SwitchBranch();
+                Debug.Log(treeHistory.current.pathIndex);
+                Debug.Log(treeHistory.current.path.Count);
                 transform.position = treeHistory.current.GetLatestPosition();
             }
             // And finally, if there are no old tendrils below your current one, you followed an old tendril to its end
