@@ -13,9 +13,9 @@ public class JuiceDisplay : MonoBehaviour
     public float LightMarkInterval = 10; // Every X MaxJuice, make a light Mark.
     public float DarkMarkInterval = 10; // Every X Light marks, make a Dark Mark instead.
 
-    public void Awake()
+    public void Start()
     {
-        juiceUiSlider = GetComponent<Slider>();
+        juiceUiSlider = gameObject.GetComponent<Slider>();
     }
 
     public void Update()
@@ -25,6 +25,11 @@ public class JuiceDisplay : MonoBehaviour
 
     public void ResetToMax()
     {
+        if (juiceUiSlider == null)
+        {
+            juiceUiSlider = gameObject.GetComponent<Slider>();
+        }
+        
         juiceUiSlider.maxValue = Juice.MaxJuice;
         juiceUiSlider.value = Juice.MaxJuice;
                 foreach (Transform trans in MarkerContainer.transform)
