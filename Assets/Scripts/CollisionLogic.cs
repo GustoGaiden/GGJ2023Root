@@ -13,7 +13,8 @@ public class CollisionLogic : MonoBehaviour
             ResourceNode cavern = collision.gameObject.GetComponent<ResourceNode>();
             cavern.ConsumeResource();
             // Debug.Log($"cavern {cavern.name} is now active" );
+            GlobalVars.GameManager.EndCurrentRun();
         }
-        GlobalVars.GameManager.EndCurrentRun();
+        
     }
 }
