@@ -16,7 +16,7 @@ public enum PlayerInput
     Neither,
 }
 
-public class Node : MonoBehaviour
+public class Node
 {
     public List<Vector2> path;
     // public List<GameObject> pathElements;
@@ -199,20 +199,19 @@ public class PlayerController : MonoBehaviour
         Debug.Log(state);
 
     }
-    void ToggleState()
+    void SetState(State newState)
     {
-        if (state == State.Exploring)
+        state = newState;
+        switch (newState)
         {
-            state = State.Traversing;
-            SetExploringHead(false);
-            SetTraversingHead(true);
-
-        }
-        else if (state == State.Traversing)
-        {
-            state = State.Exploring;
-            SetExploringHead(true);
-            SetTraversingHead(false);
+            case State.Exploring:
+                SetExploringHead(true);
+                SetTraversingHead(false);
+                break;
+            case State.Traversing:
+                SetExploringHead(false);
+                SetTraversingHead(true);
+                break;
         }
     }
     void SetTraversingHead(bool enabled)
@@ -257,7 +256,7 @@ public class PlayerController : MonoBehaviour
             {
                 movementDirection = Vector2.down * movementSpeed;
                 treeHistory.CreateBranch();
-                ToggleState();
+                SetState(State.Exploring);
             }
         }
         if (state == State.Exploring)
@@ -272,13 +271,13 @@ public class PlayerController : MonoBehaviour
     {
         if ((Input.GetKeyDown(KeyCode.A) && Input.GetKey(KeyCode.LeftShift)) || Input.GetKey(KeyCode.A) && Input.GetKeyDown(KeyCode.LeftShift) && state == State.Traversing)
         {
-            ToggleState();
+            SetState(State.Exploring);
             treeHistory.SplitBranch(PlayerInput.Left);
 
         }
         if ((Input.GetKeyDown(KeyCode.D) && Input.GetKey(KeyCode.LeftShift)) || Input.GetKey(KeyCode.D) && Input.GetKeyDown(KeyCode.LeftShift) && state == State.Traversing)
         {
-            ToggleState();
+            SetState(State.Exploring);
             treeHistory.SplitBranch(PlayerInput.Right);
 
         }
@@ -303,6 +302,6 @@ public class PlayerController : MonoBehaviour
     public void ResetForNewRun()
     {
         treeHistory.ResetToRoot();
-        ToggleState();
+        SetState(State.Traversing);
     }
 }
