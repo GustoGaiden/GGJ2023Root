@@ -2530,7 +2530,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 495342165}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4032,6 +4032,7 @@ MonoBehaviour:
   RootTextureController: {fileID: 1822760419}
   GameMapContainer: {fileID: 492906640}
   CavernsContainer: {fileID: 595332925}
+  Music: {fileID: 495342166}
   JuiceDisplay: {fileID: 1613279939}
   CurrentMode: 0
   TutorialTextUI: {fileID: 696255983}
@@ -9805,6 +9806,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1269887306, guid: b646c647daed94cbfa4c17f1c1728441, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8935737449249911112, guid: b646c647daed94cbfa4c17f1c1728441, type: 3}
       propertyPath: m_RootOrder
       value: 1
