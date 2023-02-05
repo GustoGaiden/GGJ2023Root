@@ -19,7 +19,7 @@ public enum PlayerInput
 public class Node : MonoBehaviour
 {
     public List<Vector2> path;
-    public List<GameObject> pathElements;
+    // public List<GameObject> pathElements;
     public Node left;
     public Node right;
     public int pathIndex;
@@ -27,18 +27,18 @@ public class Node : MonoBehaviour
     public Node()
     {
         path = new List<Vector2>();
-        pathElements = new List<GameObject>();
+        // pathElements = new List<GameObject>();
         left = null;
         right = null;
         pathIndex = 0;
     }
-    private Node(List<Vector2> path, Node left, Node right, int pathIndex, List<GameObject> pathElements)
+    private Node(List<Vector2> path, Node left, Node right, int pathIndex)
     {
         this.path = path;
         this.left = left;
         this.right = right;
         this.pathIndex = pathIndex;
-        this.pathElements = pathElements;
+        // this.pathElements = pathElements;
     }
     public bool IsPathNotEmpty()
     {
@@ -48,9 +48,9 @@ public class Node : MonoBehaviour
     {
         return path[(pathIndex - 1) < 0 ? 0 : (pathIndex - 1)];
     }
-    public void AddPosition(Vector2 position, RootBehaviour rootPrefab)
+    public void AddPosition(Vector2 position, GameObject rootPrefab)
     {
-        RootBehaviour rootInstance = Instantiate<RootBehaviour>(rootPrefab, transform.position, Quaternion.identity);
+        // GameObject rootInstance = Instantiate(rootPrefab, transform.position, Quaternion.identity);
         path.Add(position);
         // pathElements.Add(rootInstance);
         pathIndex++;
@@ -73,7 +73,7 @@ public class Node : MonoBehaviour
     }
     public Node Copy()
     {
-        return new Node(path, left, right, pathIndex, pathElements);
+        return new Node(path, left, right, pathIndex);
     }
 }
 public class Tree
@@ -170,7 +170,8 @@ public class PlayerController : MonoBehaviour
     private int rootCounter = 0;
 
 
-    public GameObject playerHead;
+    public GameObject playerHeadExploring;
+    public GameObject playerHeadTraversing;
     [Tooltip("Speed in units/second")]
     public float movementSpeed;
     [Tooltip("Rotational speed in degrees per second")]
@@ -178,11 +179,12 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Max angle in degrees")]
     public int maxAngle;
     [Tooltip("Texture to draw a root")]
-    public RootBehaviour rootPrefab;
+    public GameObject rootPrefab;
 
     void Awake()
     {
         movementDirection = movementDirection.normalized * movementSpeed;
+        playerHeadTraversing.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     void FixedUpdate()
@@ -194,7 +196,37 @@ public class PlayerController : MonoBehaviour
     {
         TriggerSplitBranch();
         UpdateMovementDirection();
-        playerHead.transform.up = movementDirection;
+        Debug.Log(state);
+
+    }
+    void ToggleState()
+    {
+        if (state == State.Exploring)
+        {
+            state = State.Traversing;
+            SetExploringHead(false);
+            SetTraversingHead(true);
+
+        }
+        else if (state == State.Traversing)
+        {
+            state = State.Exploring;
+            SetExploringHead(true);
+            SetTraversingHead(false);
+        }
+    }
+    void SetTraversingHead(bool enabled)
+    {
+        playerHeadTraversing.GetComponent<SpriteRenderer>().enabled = enabled;
+
+    }
+    void SetExploringHead(bool enabled)
+    {
+        SpriteRenderer[] sprites = playerHeadExploring.GetComponentsInChildren<SpriteRenderer>();
+        foreach (var sprite in sprites)
+        {
+            sprite.enabled = enabled;
+        }
     }
 
     // All player movement happens here
@@ -225,27 +257,28 @@ public class PlayerController : MonoBehaviour
             {
                 movementDirection = Vector2.down * movementSpeed;
                 treeHistory.CreateBranch();
-                state = State.Exploring;
+                ToggleState();
             }
         }
         if (state == State.Exploring)
         {
             transform.Translate(movementDirection);
-            treeHistory.current.AddPosition(transform.position);
-            RootBehaviour instance = Instantiate<RootBehaviour>(root, transform.position, Quaternion.identity);
+            treeHistory.current.AddPosition(transform.position, rootPrefab);
+            GameObject instance = Instantiate(rootPrefab, transform.position, Quaternion.identity);
+            playerHeadExploring.transform.up = movementDirection;
         }
     }
     void TriggerSplitBranch()
     {
         if ((Input.GetKeyDown(KeyCode.A) && Input.GetKey(KeyCode.LeftShift)) || Input.GetKey(KeyCode.A) && Input.GetKeyDown(KeyCode.LeftShift) && state == State.Traversing)
         {
-            state = State.Exploring;
+            ToggleState();
             treeHistory.SplitBranch(PlayerInput.Left);
 
         }
         if ((Input.GetKeyDown(KeyCode.D) && Input.GetKey(KeyCode.LeftShift)) || Input.GetKey(KeyCode.D) && Input.GetKeyDown(KeyCode.LeftShift) && state == State.Traversing)
         {
-            state = State.Exploring;
+            ToggleState();
             treeHistory.SplitBranch(PlayerInput.Right);
 
         }
@@ -270,6 +303,6 @@ public class PlayerController : MonoBehaviour
     public void ResetForNewRun()
     {
         treeHistory.ResetToRoot();
-        state = State.Traversing;
+        ToggleState();
     }
 }
