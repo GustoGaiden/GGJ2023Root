@@ -15,11 +15,12 @@ public class TutorialText : MonoBehaviour
     private List<string> TutorialTexts = new List<string>()
     {
         "Press RIGHT ARROW for TUTORIAL",
-         "Starting Out (1/5)\npress SPACEBAR to Start\n press A and D keys to Steer your Tendril",
-        "Caverns & Juice (2/5)\nExplore the earth to find Caverns.\nCaverns increase your maximum Juice.\nExploring Deeper costs more Juice.",
-        "Traversing (3/5)\nYou can Traverse your old roots!\n Press A or D to continue down a Branch.\n Traversing costs less Juice.",
-        "Branching Out (4/5)\n While Traversing: \nPress SHIFT with the A or D keys to Branch off\nand and Explore new areas.",
-        "Debug Commands (5/5)\n Press BACKSPACE to end your run early."
+        "Story (1/6)\nYou are aan alien Biomass.\nEat caverns.\nGet paid.",
+        "Starting Out (2/6)\npress SPACEBAR to Start\n press A and D keys to Steer your Tendril",
+        "Caverns & Juice (3/6)\nExplore the earth to find Caverns.\nCaverns increase your maximum Juice.\nExploring Deeper costs more Juice.",
+        "Traversing (4/6)\nYou can Traverse your old roots!\n Press A or D to continue down a Branch.\n Traversing costs less Juice.",
+        "Branching Out (5/6)\n While Traversing: \nPress SHIFT with the A or D keys to Branch off\nand and Explore new areas.",
+        "Debug Commands (6/6)\n Press BACKSPACE to end your run early."
     };
 
     private void Start()
