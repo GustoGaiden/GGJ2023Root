@@ -183,19 +183,20 @@ public class Tree
         int highlightLength = 10;
         if (current.HasBothLeaves())
         {
-            int splittingPoint = Mathf.Max((current.pathElements.Count - 1 - highlightLength), 0);
-            int availableTail = Mathf.Min(highlightLength, current.pathElements.Count - 1 - splittingPoint);
-            int availableHead = 0;
-            List<GameObject> pathToHighlight = current.pathElements.GetRange(splittingPoint, highlightLength);
+            int startSplitUpperPart = Mathf.Max((current.pathElements.Count - 1 - highlightLength), 0);
+            int lengthUpperSplit = Mathf.Min(highlightLength, current.pathElements.Count - 1 - startSplitUpperPart);
+            int startSplitLowerPart = 0;
+            int lengthLowerSplit = 0;
+            List<GameObject> pathToHighlight = current.pathElements.GetRange(startSplitUpperPart, highlightLength);
             switch (bufferedInput)
             {
                 case PlayerInput.Left:
-                    availableHead = Mathf.Min(highlightLength, current.left.pathElements.Count - 1);
-                    pathToHighlight.AddRange(current.left.pathElements.GetRange(0, availableHead));
+                    lengthLowerSplit = Mathf.Min(highlightLength, current.left.pathElements.Count - 1);
+                    pathToHighlight.AddRange(current.left.pathElements.GetRange(startSplitLowerPart, lengthLowerSplit));
                     break;
                 case PlayerInput.Right:
-                    availableHead = Mathf.Min(highlightLength, current.right.pathElements.Count - 1);
-                    pathToHighlight.AddRange(current.right.pathElements.GetRange(0, availableHead));
+                    lengthLowerSplit = Mathf.Min(highlightLength, current.right.pathElements.Count - 1);
+                    pathToHighlight.AddRange(current.right.pathElements.GetRange(startSplitLowerPart, lengthLowerSplit));
                     break;
 
             }
