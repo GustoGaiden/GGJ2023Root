@@ -40,8 +40,11 @@ public class GameManager : MonoBehaviour
     {
         ManageGameMode();
         CheckManualResets();
-        DepleteJuice();
-        CheckJuiceEmpty();
+        if (CurrentMode == GameMode.RunActive)
+        {
+            DepleteJuice();
+            CheckJuiceEmpty();
+        }
     }
 
     void CheckManualResets()
