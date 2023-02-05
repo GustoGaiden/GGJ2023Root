@@ -53,16 +53,17 @@ public class GameManager : MonoBehaviour
     
     public void StartNewRun()
     {
-        ResetJuiceToMax(Juice.InitialMaxJuice + ResourceNodeManager.GetMaxJuiceIncrease());
+        ResetJuiceToMax();
         PlayerController.ResetForNewRun();
     }
 
     public void DepleteJuice(float JuiceDepletionRate) {
         Juice.CurrentJuice = Mathf.Max(Juice.CurrentJuice - JuiceDepletionRate, 0f);
     }
-    public void ResetJuiceToMax(float newMaxValue)
+    public void ResetJuiceToMax()
     {
         Debug.Log($"Current Juice: ${Juice.CurrentJuice}");
+        float newMaxValue = Juice.InitialMaxJuice + ResourceNodeManager.GetMaxJuiceIncrease();
         Debug.Log($"Reset to max. Old Max = {Juice.MaxJuice} and New Max = {newMaxValue}");
         Juice.MaxJuice = newMaxValue;
         Juice.CurrentJuice = Juice.MaxJuice;
