@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     public GameMode CurrentMode;
     public TutorialText TutorialTextUI;
+    public FlavorText FlavorTextUI;
     
     public enum GameMode {
         RunStart, // Waiting for player input
@@ -70,6 +71,7 @@ public class GameManager : MonoBehaviour
         ResetJuiceToMax();
         PlayerController.ResetForNewRun();
         TutorialTextUI.ShowTutorial();
+        FlavorTextUI.ShowFlavorText();
     }
     
     public void DepleteJuice() {
@@ -101,6 +103,7 @@ public class GameManager : MonoBehaviour
         {
             CurrentMode = GameMode.RunActive;
             TutorialTextUI.HideTutorial();
+            FlavorTextUI.HideFlavorText();
         }
     }
 
