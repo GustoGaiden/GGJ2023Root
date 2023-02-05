@@ -10,7 +10,7 @@ public class ResourceNodeManager : MonoBehaviour
     {
         get
         {
-            return AllResources.FindAll((resource) => resource.State == ResourceNodeState.ACTIVE);
+            return AllResources.FindAll((resource) => resource.State == ResourceNodeState.DEPLETED);
         }
     }
 
