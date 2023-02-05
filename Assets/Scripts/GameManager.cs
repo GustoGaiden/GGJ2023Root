@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
         ResetJuiceToMax();
         PlayerController.ResetForNewRun();
         TutorialTextUI.ShowTutorial();
+        MusicOffTextUi.ShowMusicOffText();
     }
     
     public void DepleteJuice() {
@@ -105,6 +106,8 @@ public class GameManager : MonoBehaviour
         {
             CurrentMode = GameMode.RunActive;
             TutorialTextUI.HideTutorial();
+            MusicOffTextUi.HideMusicOffText();
+
         }
     }
 
