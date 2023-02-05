@@ -78,6 +78,7 @@ public class Node
     {
         return new Node(path, left, right, pathIndex, pathElements);
     }
+
 }
 public class Tree
 {
@@ -170,6 +171,7 @@ public class Tree
             current.right = new Node();
             current = current.right;
         }
+
     }
 
     public void ResetHighlightedBranch()
@@ -180,34 +182,51 @@ public class Tree
         }
         highlightedBranch.Clear();
     }
+    public List<GameObject> GetFirstNof(int n, List<GameObject> segments)
+    {
+        if (n >= segments.Count)
+        {
+            return segments;
+        }
+        else
+        {
+            return segments.GetRange(0, n);
+        }
+    }
+    public List<GameObject> GetLastNof(int n, List<GameObject> segments)
+    {
+        if (n >= segments.Count)
+        {
+            return segments;
+        }
+        else
+        {
+            return segments.GetRange(segments.Count - 1 - n, n);
+        }
+    }
 
 
     public void HighlightBranch()
     {
-        int highlightLength = 10;
+        int upperHighlightLength = 30;
+        int lowerHighlightLength = 100;
         if (current.HasBothLeaves())
         {
-            int startSplitUpperPart = Mathf.Max((current.pathElements.Count - 1 - highlightLength), 0);
-            int lengthUpperSplit = Mathf.Min(highlightLength, current.pathElements.Count - 1 - startSplitUpperPart);
-            int startSplitLowerPart = 0;
-            int lengthLowerSplit = 0;
-            List<GameObject> pathToHighlight = current.pathElements.GetRange(startSplitUpperPart, highlightLength);
+            List<GameObject> pathToHighlight = GetLastNof(upperHighlightLength, current.pathElements);
             switch (bufferedInput)
             {
                 case PlayerInput.Left:
-                    lengthLowerSplit = Mathf.Min(highlightLength, current.left.pathElements.Count - 1);
-                    pathToHighlight.AddRange(current.left.pathElements.GetRange(startSplitLowerPart, lengthLowerSplit));
+                    pathToHighlight.AddRange(GetFirstNof(lowerHighlightLength, current.left.pathElements));
                     break;
                 case PlayerInput.Right:
-                    lengthLowerSplit = Mathf.Min(highlightLength, current.right.pathElements.Count - 1);
-                    pathToHighlight.AddRange(current.right.pathElements.GetRange(startSplitLowerPart, lengthLowerSplit));
+                    pathToHighlight.AddRange(GetFirstNof(lowerHighlightLength, current.right.pathElements));
                     break;
 
             }
             foreach (GameObject pathElement in pathToHighlight)
             {
 
-                pathElement.GetComponent<SpriteRenderer>().color = Color.black;
+                pathElement.GetComponent<SpriteRenderer>().color = Color.green;
             }
             highlightedBranch = pathToHighlight;
         }
@@ -247,7 +266,7 @@ public class PlayerController : MonoBehaviour
             // The player does not currently have direct control. Don't do anything.
             return;
         }
-        
+
         MovePlayer();
     }
 
@@ -258,10 +277,12 @@ public class PlayerController : MonoBehaviour
             // The player does not currently have direct control. Don't do anything.
             return;
         }
-        
+
         TriggerSplitBranch();
         UpdateMovementDirection();
         Debug.Log(state);
+        Debug.Log("COUNT: " + treeHistory.current.path.Count.ToString());
+        Debug.Log("INDEX: " + treeHistory.current.pathIndex.ToString());
     }
     void SetState(State newState)
     {
@@ -307,11 +328,6 @@ public class PlayerController : MonoBehaviour
             {
                 treeHistory.ContinueOnBranch();
                 transform.position = treeHistory.current.GetLatestPosition();
-                // if (treeHistory.current.HasLeaves())
-                // {
-                //     Debug.Log("Highlighting");
-                //     treeHistory.HighlightBranch();
-                // }
             }
             // If you aren't in the midst of that, check if other old tendrils are below your current one and switch to them
             else if (treeHistory.current.HasLeaves())
@@ -336,19 +352,38 @@ public class PlayerController : MonoBehaviour
             playerHeadExploring.transform.up = movementDirection;
         }
     }
+
     void TriggerSplitBranch()
     {
         if ((Input.GetKeyDown(KeyCode.A) && Input.GetKey(KeyCode.LeftShift)) || Input.GetKey(KeyCode.A) && Input.GetKeyDown(KeyCode.LeftShift) && state == State.Traversing)
         {
             SetState(State.Exploring);
             treeHistory.SplitBranch(PlayerInput.Left);
+            // movementDirection = GetSplitDirection(PlayerInput.Left, movementSpeed);
 
         }
         if ((Input.GetKeyDown(KeyCode.D) && Input.GetKey(KeyCode.LeftShift)) || Input.GetKey(KeyCode.D) && Input.GetKeyDown(KeyCode.LeftShift) && state == State.Traversing)
         {
             SetState(State.Exploring);
             treeHistory.SplitBranch(PlayerInput.Right);
+            // movementDirection = GetSplitDirection(PlayerInput.Right, movementSpeed);
 
+        }
+    }
+    public Vector2 GetSplitDirection(PlayerInput input, float movementSpeed)
+    {
+        Debug.Log("asd");
+        Debug.Log(treeHistory.current.path.Count);
+        if (treeHistory.current.path.Count - 2 >= 0)
+        {
+            Vector2 to = treeHistory.current.GetLatestPosition();
+            Vector2 from = treeHistory.current.path[treeHistory.current.pathIndex - 2];
+            return (from + to).normalized * movementSpeed;
+        }
+        else
+        {
+            Debug.Log("reeee");
+            return Vector2.down * movementSpeed;
         }
     }
 
