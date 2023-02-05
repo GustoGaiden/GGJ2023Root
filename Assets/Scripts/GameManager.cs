@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class GameManager : MonoBehaviour
     public RootTextureController RootTextureController;
     public GameObject GameMapContainer;
     public GameObject CavernsContainer;
+    public AudioSource Music;
 
     public JuiceDisplay JuiceDisplay;
 
@@ -35,11 +37,27 @@ public class GameManager : MonoBehaviour
         DirtManager.RegenerateWorld();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            if (Music.isPlaying)
+            {
+                Music.Pause();
+            }
+            else
+            {
+                Music.UnPause();
+            }
+        }
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
         ManageGameMode();
         CheckManualResets();
+
         if (CurrentMode == GameMode.RunActive)
         {
             DepleteJuice();
