@@ -19,7 +19,7 @@ public class DirtManager : MonoBehaviour
 
     public GameObject CavernContainer;
 
-    private List<GameObject> dirtTiers = new List<GameObject>();
+    private List<DirtTier> dirtTiers = new List<DirtTier>();
 
     private List<GameObject> gravelBlobs = new List<GameObject>();
 
@@ -45,28 +45,18 @@ public class DirtManager : MonoBehaviour
     {
         
     }
-    
-    private void destroyGameObjects(List<GameObject> objList)
-    {
-        foreach (GameObject obj in objList)
-        {
-            obj.transform.SetParent(null);
-            Destroy(obj);            
-        }
-        objList.RemoveRange(0, objList.Count);
-    }
-
-    private void destroyEverything()
-    {
-        destroyGameObjects(dirtTiers);
-        destroyGameObjects(gravelBlobs);
-        destroyGameObjects(caverns);
-    }
 
     private void regenerateDirt()
     {
-        destroyGameObjects(dirtTiers);
+        // Destroy existing Tiers
+        foreach (DirtTier obj in dirtTiers)
+        {
+            obj.transform.SetParent(null);
+            Destroy(obj.gameObject);            
+        }
+        dirtTiers.RemoveRange(0, dirtTiers.Count);
 
+        // Start generating new tiers
         for (int i = 0; i < DirtTiersJuicePerSecond.Count; i++)
         {
             DirtTier NewDirtTier = Instantiate(DirtPrefab);
@@ -76,19 +66,19 @@ public class DirtManager : MonoBehaviour
             switch (i)
             {
                 case 0:
-                    NewDirtTier.sprite.color = new Color(1,1,1,0.1f);
+                    NewDirtTier.sprite.color = new Color(1,1,1,0.3f);
                     break;
                 case 1:
-                    NewDirtTier.sprite.color = new Color(1,0,1,0.1f);
+                    NewDirtTier.sprite.color = new Color(1,0,1,0.3f);
                     break;
                 case 2:
-                    NewDirtTier.sprite.color = new Color(0,1,1,0.1f);
+                    NewDirtTier.sprite.color = new Color(0,1,1,0.3f);
                     break;
                 case 3:
-                    NewDirtTier.sprite.color = new Color(0,0,1,0.1f);;
+                    NewDirtTier.sprite.color = new Color(0,0,1,0.3f);;
                     break;
                 default:
-                    NewDirtTier.sprite.color = new Color(1,0,0,0.1f);;
+                    NewDirtTier.sprite.color = new Color(1,0,0,0.3f);;
                     break;
             }
 
@@ -96,18 +86,42 @@ public class DirtManager : MonoBehaviour
             
             NewDirtTier.transform.SetParent(DirtContainer.transform);
             NewDirtTier.transform.position = new Vector3(0f, tierSize.y * -i - (tierSize.y/2) , 0f);
-            dirtTiers.Add(NewDirtTier.gameObject);
+            dirtTiers.Add(NewDirtTier);
         }
         
     }
     
     public void RegenerateWorld()
     {
-        destroyEverything();
-
         tierSize = new Vector2(GameWorldBounds.size.x, GameWorldBounds.size.y / 4);
-        
         regenerateDirt();
+    }
 
+    private float GetCurrentDirtCostPerSecond()
+    {
+        // Start with lowest tier value.
+        float highestValue = dirtTiers[0].JuiceCostPerSecond;
+        
+        foreach (DirtTier tier in dirtTiers)
+        {
+            if (tier.isPlayerTouchingThisTier())
+            {
+                highestValue = Mathf.Max(highestValue, tier.JuiceCostPerSecond);
+            }
+        }
+        return highestValue;
+    }
+
+    private float GetCurrentGravelCostModifier()
+    {
+        // TO DO : ADD GRAVEL
+        return 1f;
+    }
+
+    public float GetCurrentJuiceCostPerSecond()
+    {
+        float dirtCost = GetCurrentDirtCostPerSecond();
+        float gravelMod = GetCurrentGravelCostModifier();
+        return dirtCost * gravelMod;
     }
 }
