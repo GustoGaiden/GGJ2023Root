@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public JuiceDisplay JuiceDisplay;
 
     public GameMode CurrentMode;
+    public TutorialText TutorialTextUI;
+    public FlavorText FlavorTextUI;
     
     public enum GameMode {
         RunStart, // Waiting for player input
@@ -38,8 +40,11 @@ public class GameManager : MonoBehaviour
     {
         ManageGameMode();
         CheckManualResets();
-        DepleteJuice();
-        CheckJuiceEmpty();
+        if (CurrentMode == GameMode.RunActive)
+        {
+            DepleteJuice();
+            CheckJuiceEmpty();
+        }
     }
 
     void CheckManualResets()
@@ -68,6 +73,8 @@ public class GameManager : MonoBehaviour
         CurrentMode = GameMode.RunStart;
         ResetJuiceToMax();
         PlayerController.ResetForNewRun();
+        TutorialTextUI.ShowTutorial();
+        FlavorTextUI.ShowFlavorText();
     }
     
     public void DepleteJuice() {
@@ -97,8 +104,9 @@ public class GameManager : MonoBehaviour
         // Waiting for Player to press START, and begin a run.
         if (CurrentMode == GameMode.RunStart && Input.GetKey(KeyCode.Space))
         {
-            Debug.Log("START IT");
             CurrentMode = GameMode.RunActive;
+            TutorialTextUI.HideTutorial();
+            FlavorTextUI.HideFlavorText();
         }
     }
 
