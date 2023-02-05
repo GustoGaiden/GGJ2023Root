@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ResourceNodeManager : MonoBehaviour
 {
-    public List<ResourceNode> AllResources;
+    private List<ResourceNode> AllResources = new List<ResourceNode>();
 
     public List<ResourceNode> ActiveResources
     {
@@ -22,5 +22,16 @@ public class ResourceNodeManager : MonoBehaviour
             output = output + resource.MaxJuiceIncrease;
         }
         return output;
+    }
+
+    private void Awake()
+    {
+        ResourceNode[] resources = FindObjectsOfType<ResourceNode>();
+        Debug.Log($"Found {resources.Length} resources on awake.");
+        foreach (ResourceNode resource in resources)
+        {
+            AllResources.Add(resource);
+        }
+
     }
 }
