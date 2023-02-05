@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1148121552679395276}
   - component: {fileID: 1148121552679395278}
   - component: {fileID: 1148121552679395279}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DIrtPrefab
-  m_TagString: Untagged
+  m_TagString: Dirt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -86,7 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1148121553645768969}
   - component: {fileID: 1148121553645768968}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
