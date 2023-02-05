@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     public GameMode CurrentMode;
     public TutorialText TutorialTextUI;
+    public MusicOffText MusicOffTextUi;
 
     public enum GameMode {
         RunStart, // Waiting for player input
