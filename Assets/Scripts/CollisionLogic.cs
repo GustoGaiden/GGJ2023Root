@@ -14,6 +14,6 @@ public class CollisionLogic : MonoBehaviour
             cavern.ConsumeResource();
             // Debug.Log($"cavern {cavern.name} is now active" );
         }
-        PlayerController.ResetForNewRun();
+        GlobalVars.GameManager.EndCurrentRun();
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -45,7 +46,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Backspace))
         {
-            StartNewRun();
+            EndCurrentRun();
         }
 
         if (Input.GetKey(KeyCode.R))
@@ -58,17 +59,17 @@ public class GameManager : MonoBehaviour
     {
         if (Juice.CurrentJuice <= 0f)
         {
-            StartNewRun();
+            EndCurrentRun();
         }
     }
     
     public void StartNewRun()
     {
+        CurrentMode = GameMode.RunStart;
         ResetJuiceToMax();
         PlayerController.ResetForNewRun();
-        CurrentMode = GameMode.RunStart;
     }
-
+    
     public void DepleteJuice() {
         float costPerSecond = DirtManager.GetCurrentJuiceCostPerSecond();
         float costCurrentTime = costPerSecond * Time.fixedDeltaTime;
@@ -99,5 +100,21 @@ public class GameManager : MonoBehaviour
             Debug.Log("START IT");
             CurrentMode = GameMode.RunActive;
         }
+    }
+
+    public void EndCurrentRun()
+    {
+        StartCoroutine(TransitionFromEndToStart());
+    }
+    
+    // https://docs.unity3d.com/Manual/Coroutines.html
+    // Coroutine : After a delay
+    IEnumerator TransitionFromEndToStart()
+    {
+        CurrentMode = GameMode.RunEnd;
+        Debug.Log("Ending Wait Begins");
+        yield return new WaitForSeconds(2f);
+        Debug.Log("Ending Wait Complete");
+        StartNewRun();
     }
 }

@@ -314,6 +314,6 @@ public class PlayerController : MonoBehaviour
     {
         treeHistory.ResetToRoot();
         SetState(State.Traversing);
+        MovePlayer();
     }
-    
 }
