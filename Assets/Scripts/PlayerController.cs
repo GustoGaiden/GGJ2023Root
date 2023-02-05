@@ -19,7 +19,7 @@ public enum PlayerInput
 public class Node
 {
     public List<Vector2> path;
-    // public List<GameObject> pathElements;
+    public List<GameObject> pathElements;
     public Node left;
     public Node right;
     public int pathIndex;
@@ -27,18 +27,18 @@ public class Node
     public Node()
     {
         path = new List<Vector2>();
-        // pathElements = new List<GameObject>();
+        pathElements = new List<GameObject>();
         left = null;
         right = null;
         pathIndex = 0;
     }
-    private Node(List<Vector2> path, Node left, Node right, int pathIndex)
+    private Node(List<Vector2> path, Node left, Node right, int pathIndex, List<GameObject> pathElements)
     {
         this.path = path;
         this.left = left;
         this.right = right;
         this.pathIndex = pathIndex;
-        // this.pathElements = pathElements;
+        this.pathElements = pathElements;
     }
     public bool IsPathNotEmpty()
     {
@@ -48,11 +48,10 @@ public class Node
     {
         return path[(pathIndex - 1) < 0 ? 0 : (pathIndex - 1)];
     }
-    public void AddPosition(Vector2 position, GameObject rootPrefab)
+    public void AddPosition(Vector2 position, GameObject rootPart)
     {
-        // GameObject rootInstance = Instantiate(rootPrefab, transform.position, Quaternion.identity);
         path.Add(position);
-        // pathElements.Add(rootInstance);
+        pathElements.Add(rootPart);
         pathIndex++;
     }
     public void Reset()
@@ -71,9 +70,13 @@ public class Node
     {
         return (HasLeft() || HasRight());
     }
+    public bool HasBothLeaves()
+    {
+        return (HasLeft() && HasRight());
+    }
     public Node Copy()
     {
-        return new Node(path, left, right, pathIndex);
+        return new Node(path, left, right, pathIndex, pathElements);
     }
 }
 public class Tree
@@ -83,11 +86,14 @@ public class Tree
 
     public PlayerInput bufferedInput;
 
+    private List<GameObject> highlightedBranch;
+
     public Tree()
     {
         root = new Node();
         current = root;
         bufferedInput = PlayerInput.Neither;
+        highlightedBranch = new List<GameObject>();
     }
     public bool IsCurrentRoot()
     {
@@ -106,6 +112,8 @@ public class Tree
     {
         if (Input.GetKey(KeyCode.A)) { bufferedInput = PlayerInput.Left; }
         if (Input.GetKey(KeyCode.D)) { bufferedInput = PlayerInput.Right; }
+        ResetHighlightedBranch();
+        HighlightBranch();
     }
     public void SwitchBranch()
     {
@@ -157,6 +165,46 @@ public class Tree
             current.left = shortenedNode;
             current.right = new Node();
             current = current.right;
+        }
+    }
+
+    public void ResetHighlightedBranch()
+    {
+        foreach (GameObject pathElement in highlightedBranch)
+        {
+            pathElement.GetComponent<SpriteRenderer>().color = Color.white;
+        }
+        highlightedBranch.Clear();
+    }
+
+
+    public void HighlightBranch()
+    {
+        int highlightLength = 10;
+        if (current.HasBothLeaves())
+        {
+            int splittingPoint = Mathf.Max((current.pathElements.Count - 1 - highlightLength), 0);
+            int availableTail = Mathf.Min(highlightLength, current.pathElements.Count - 1 - splittingPoint);
+            int availableHead = 0;
+            List<GameObject> pathToHighlight = current.pathElements.GetRange(splittingPoint, highlightLength);
+            switch (bufferedInput)
+            {
+                case PlayerInput.Left:
+                    availableHead = Mathf.Min(highlightLength, current.left.pathElements.Count - 1);
+                    pathToHighlight.AddRange(current.left.pathElements.GetRange(0, availableHead));
+                    break;
+                case PlayerInput.Right:
+                    availableHead = Mathf.Min(highlightLength, current.right.pathElements.Count - 1);
+                    pathToHighlight.AddRange(current.right.pathElements.GetRange(0, availableHead));
+                    break;
+
+            }
+            foreach (GameObject pathElement in pathToHighlight)
+            {
+
+                pathElement.GetComponent<SpriteRenderer>().color = Color.black;
+            }
+            highlightedBranch = pathToHighlight;
         }
     }
 
@@ -243,6 +291,11 @@ public class PlayerController : MonoBehaviour
             {
                 treeHistory.ContinueOnBranch();
                 transform.position = treeHistory.current.GetLatestPosition();
+                // if (treeHistory.current.HasLeaves())
+                // {
+                //     Debug.Log("Highlighting");
+                //     treeHistory.HighlightBranch();
+                // }
             }
             // If you aren't in the midst of that, check if other old tendrils are below your current one and switch to them
             else if (treeHistory.current.HasLeaves())
@@ -262,8 +315,8 @@ public class PlayerController : MonoBehaviour
         if (state == State.Exploring)
         {
             transform.Translate(movementDirection);
-            treeHistory.current.AddPosition(transform.position, rootPrefab);
             GameObject instance = Instantiate(rootPrefab, transform.position, Quaternion.identity);
+            treeHistory.current.AddPosition(transform.position, instance);
             playerHeadExploring.transform.up = movementDirection;
         }
     }
