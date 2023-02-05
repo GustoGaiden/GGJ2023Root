@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -21,5 +20,8 @@ public class ResourceNode : MonoBehaviour
             State = ResourceNodeState.DEPLETED;
             GlobalVars.GameManager.ResetJuiceToMax();
         }
+
+        SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
+        Debug.Log(sr.sprite);
     }
 }
