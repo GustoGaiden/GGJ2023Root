@@ -19,11 +19,11 @@ public class DirtManager : MonoBehaviour
 
     public GameObject CavernContainer;
 
-    private List<GameObject> dirtTiers;
+    private List<GameObject> dirtTiers = new List<GameObject>();
 
-    private List<GameObject> gravelBlobs;
+    private List<GameObject> gravelBlobs = new List<GameObject>();
 
-    private List<GameObject> caverns;
+    private List<GameObject> caverns = new List<GameObject>();
 
     public List<float> DirtTiersJuicePerSecond = new List<float> {0.1f, 1.0f, 5.0f, 15.0f};
     public List<float> GravelTierMultipliers = new List<float> {1.1f, 1.5f, 3.0f};
@@ -38,9 +38,6 @@ public class DirtManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        dirtTiers = new List<GameObject>();
-        gravelBlobs = new List<GameObject>();
-        caverns = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -51,11 +48,6 @@ public class DirtManager : MonoBehaviour
     
     private void destroyGameObjects(List<GameObject> objList)
     {
-        if (objList == null)
-        {
-            objList = new List<GameObject>();
-        }
-        
         foreach (GameObject obj in objList)
         {
             obj.transform.SetParent(null);
@@ -104,6 +96,7 @@ public class DirtManager : MonoBehaviour
             
             NewDirtTier.transform.SetParent(DirtContainer.transform);
             NewDirtTier.transform.position = new Vector3(0f, tierSize.y * -i - (tierSize.y/2) , 0f);
+            dirtTiers.Add(NewDirtTier.gameObject);
         }
         
     }
