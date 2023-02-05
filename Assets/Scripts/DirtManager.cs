@@ -33,8 +33,8 @@ public class DirtManager : MonoBehaviour
     
     public List<float> gravelTierModifiers;
     private int numCavernsPerTier = 2;
-    
-    private Vector2 tierSize;
+
+    private Vector2 tierSize = new Vector2();
     
     // Start is called before the first frame update
     void Start()
@@ -86,7 +86,7 @@ public class DirtManager : MonoBehaviour
             NewDirtTier.sprite.size = tierSize;
             
             NewDirtTier.transform.SetParent(DirtContainer.transform);
-            NewDirtTier.transform.position = new Vector3(0f, tierSize.y * -i - (tierSize.y/2) , 0f);
+            NewDirtTier.transform.position = new Vector3(GameWorldBounds.bounds.center.x,  GameWorldBounds.bounds.center.y + GameWorldBounds.bounds.extents.y     + tierSize.y * -i - (tierSize.y/2) , 0f);
             dirtTiers.Add(NewDirtTier);
 
         }
