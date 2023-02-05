@@ -14,7 +14,7 @@ public class TutorialText : MonoBehaviour
 
     private List<string> TutorialTexts = new List<string>()
     {
-        "Press RIGHT ARROW for TUTORIAL",
+        "Press RIGHT ARROW for TUTORIAL\nPress M to toggle Music.",
         "Story (1/6)\nYou are aan alien Biomass.\nEat caverns.\nGet paid.",
         "Starting Out (2/6)\npress SPACEBAR to Start\n press A and D keys to Steer your Tendril",
         "Caverns & Juice (3/6)\nExplore the earth to find Caverns.\nCaverns increase your maximum Juice.\nExploring Deeper costs more Juice.",
