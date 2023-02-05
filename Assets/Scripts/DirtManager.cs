@@ -30,14 +30,13 @@ public class DirtManager : MonoBehaviour
 
     public DirtTier DirtPrefab;
     
-
-public List<float> gravelTierModifiers;
+    public List<float> gravelTierModifiers;
     private int numCavernsPerTier = 2;
     
     private Vector2 tierSize;
     
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         dirtTiers = new List<GameObject>();
         gravelBlobs = new List<GameObject>();

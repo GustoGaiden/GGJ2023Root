@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +10,11 @@ public class GameManager : MonoBehaviour
     public GameObject CavernsContainer;
 
     public JuiceDisplay JuiceDisplay;
+
+    void Start()
+    {
+        GlobalVars.GameManager = this;
+    }
     
     private void Awake()
     {
