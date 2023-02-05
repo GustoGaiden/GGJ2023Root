@@ -27,7 +27,7 @@ public class ResourceNodeManager : MonoBehaviour
     private void Awake()
     {
         ResourceNode[] resources = FindObjectsOfType<ResourceNode>();
-        Debug.Log($"Found {resources.Length} resources on awake.");
+        // Debug.Log($"Found {resources.Length} resources on awake.");
         foreach (ResourceNode resource in resources)
         {
             AllResources.Add(resource);

@@ -280,9 +280,9 @@ public class PlayerController : MonoBehaviour
 
         TriggerSplitBranch();
         UpdateMovementDirection();
-        Debug.Log(state);
-        Debug.Log("COUNT: " + treeHistory.current.path.Count.ToString());
-        Debug.Log("INDEX: " + treeHistory.current.pathIndex.ToString());
+        // Debug.Log(state);
+        // Debug.Log("COUNT: " + treeHistory.current.path.Count.ToString());
+        // Debug.Log("INDEX: " + treeHistory.current.pathIndex.ToString());
     }
     void SetState(State newState)
     {
@@ -372,7 +372,6 @@ public class PlayerController : MonoBehaviour
     }
     public Vector2 GetSplitDirection(PlayerInput input, float movementSpeed)
     {
-        Debug.Log("asd");
         Debug.Log(treeHistory.current.path.Count);
         if (treeHistory.current.path.Count - 2 >= 0)
         {
@@ -382,7 +381,6 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Debug.Log("reeee");
             return Vector2.down * movementSpeed;
         }
     }

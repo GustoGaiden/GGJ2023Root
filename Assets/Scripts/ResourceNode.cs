@@ -16,12 +16,11 @@ public class ResourceNode : MonoBehaviour
     {
         if (State == ResourceNodeState.AVAILABLE)
         {
-            Debug.Log($"Resource {name} is now active");
+            // Debug.Log($"Resource {name} is now active");
             State = ResourceNodeState.DEPLETED;
             GlobalVars.GameManager.ResetJuiceToMax();
         }
 
         SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
-        Debug.Log(sr.sprite);
     }
 }
