@@ -70,11 +70,6 @@ public class Node
     {
         return new Node(path, left, right, pathIndex);
     }
-    public Node GetOnlyChild()
-    {
-        return left == null ? right : left;
-    }
-
 }
 public class Tree
 {
@@ -100,7 +95,6 @@ public class Tree
     }
     public void ContinueOnBranch()
     {
-        // historyIndex++;
         current.pathIndex++;
     }
     public void BufferInput()
@@ -195,21 +189,30 @@ public class PlayerController : MonoBehaviour
         UpdateMovementDirection();
     }
 
+    // All player movement happens here
+    // It is differentiated between two modes:
+    //      - travelling on previous tendrils aka 'Traversing'
+    //      - create a new tendril aka 'Exploring'
     void MovePlayer()
     {
+        // Traversing the network has multiple modes as well:
         if (state == State.Traversing)
         {
             treeHistory.BufferInput();
+            // You are currently in the midst of following an old tendril, so continue doing that
             if (treeHistory.current.IsPathNotEmpty())
             {
                 treeHistory.ContinueOnBranch();
                 transform.position = treeHistory.current.GetLatestPosition();
             }
+            // If you aren't in the midst of that, check if other old tendrils are below your current one and switch to them
             else if (treeHistory.current.HasLeaves())
             {
                 treeHistory.SwitchBranch();
                 transform.position = treeHistory.current.GetLatestPosition();
             }
+            // And finally, if there are no old tendrils below your current one, you followed an old tendril to its end
+            // In that case, create a new branch at the end of it
             else
             {
                 movementDirection = Vector2.down * movementSpeed;
