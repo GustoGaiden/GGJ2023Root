@@ -121,9 +121,9 @@ public class GameManager : MonoBehaviour
     IEnumerator TransitionFromEndToStart()
     {
         CurrentMode = GameMode.RunEnd;
-        Debug.Log("Ending Wait Begins");
+        // Debug.Log("Ending Wait Begins");
         yield return new WaitForSeconds(2f);
-        Debug.Log("Ending Wait Complete");
+        // Debug.Log("Ending Wait Complete");
         StartNewRun();
     }
 }
