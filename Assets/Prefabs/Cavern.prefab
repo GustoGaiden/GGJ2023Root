@@ -139,4 +139,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
-  MaxJuiceIncrease: 30
+  MaxJuiceIncrease: 20
