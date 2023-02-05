@@ -5,7 +5,7 @@ using UnityEngine;
 public enum ResourceNodeState {
     AVAILABLE,
     ACTIVE,
-    DEPLETED
+    STONE
 }
 
 public class ResourceNode : MonoBehaviour
