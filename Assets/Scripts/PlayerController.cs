@@ -148,11 +148,15 @@ public class Tree
     public void SplitBranch(PlayerInput input)
     {
         List<Vector2> previousPath = current.path.GetRange(0, current.pathIndex);
+        List<GameObject> previousPathElements = current.pathElements.GetRange(0, current.pathIndex);
         List<Vector2> remainingPath = current.path.GetRange(current.pathIndex, current.path.Count - current.pathIndex - 1);
+        List<GameObject> remainingPathElements = current.pathElements.GetRange(current.pathIndex, current.pathElements.Count - current.pathIndex - 1);
         current.path = previousPath;
+        current.pathElements = previousPathElements;
 
         Node shortenedNode = current.Copy();
         shortenedNode.path = remainingPath;
+        shortenedNode.pathElements = remainingPathElements;
 
         if (input == PlayerInput.Left)
         {
