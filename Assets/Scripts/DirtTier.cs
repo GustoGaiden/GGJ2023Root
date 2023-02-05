@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -8,5 +9,16 @@ namespace DefaultNamespace
         public BoxCollider2D Collider;
         public int TierLevel;
         public SpriteRenderer sprite;
+
+        private PlayerController player;
+        private void Awake()
+        {
+            // player = GlobalVars.GameManager.PlayerController;
+        }
+
+        public bool isPlayerTouchingThisTier()
+        {
+            return Collider.IsTouchingLayers(LayerMask.NameToLayer("Player"));
+        }
     }
 }

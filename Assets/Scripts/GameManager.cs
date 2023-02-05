@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     void FixedUpdate()
     {
         CheckManualResets();
-        DepleteJuice(Juice.JuiceDepletionRate);
+        DepleteJuice();
         CheckJuiceEmpty();
     }
 
@@ -57,14 +57,18 @@ public class GameManager : MonoBehaviour
         PlayerController.ResetForNewRun();
     }
 
-    public void DepleteJuice(float JuiceDepletionRate) {
-        Juice.CurrentJuice = Mathf.Max(Juice.CurrentJuice - JuiceDepletionRate, 0f);
+    public void DepleteJuice() {
+        float costPerSecond = DirtManager.GetCurrentJuiceCostPerSecond();
+        float costCurrentTime = costPerSecond * Time.fixedDeltaTime;
+        Juice.CurrentJuice = Mathf.Max(Juice.CurrentJuice - costCurrentTime, 0f);
     }
+
     public void ResetJuiceToMax()
     {
-        Debug.Log($"Current Juice: ${Juice.CurrentJuice}");
         float newMaxValue = Juice.InitialMaxJuice + ResourceNodeManager.GetMaxJuiceIncrease();
+        Debug.Log($"Current Juice: ${Juice.CurrentJuice}");
         Debug.Log($"Reset to max. Old Max = {Juice.MaxJuice} and New Max = {newMaxValue}");
+        
         Juice.MaxJuice = newMaxValue;
         Juice.CurrentJuice = Juice.MaxJuice;
         JuiceDisplay.ResetToMax();
