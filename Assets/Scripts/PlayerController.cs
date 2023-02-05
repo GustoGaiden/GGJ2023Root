@@ -193,7 +193,6 @@ public class PlayerController : MonoBehaviour
     {
         TriggerSplitBranch();
         UpdateMovementDirection();
-        PrintPaths();
     }
 
     void MovePlayer()
