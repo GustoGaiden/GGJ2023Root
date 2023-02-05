@@ -16,9 +16,10 @@ public enum PlayerInput
     Neither,
 }
 
-public class Node
+public class Node : MonoBehaviour
 {
     public List<Vector2> path;
+    public List<GameObject> pathElements;
     public Node left;
     public Node right;
     public int pathIndex;
@@ -26,16 +27,18 @@ public class Node
     public Node()
     {
         path = new List<Vector2>();
+        pathElements = new List<GameObject>();
         left = null;
         right = null;
         pathIndex = 0;
     }
-    private Node(List<Vector2> path, Node left, Node right, int pathIndex)
+    private Node(List<Vector2> path, Node left, Node right, int pathIndex, List<GameObject> pathElements)
     {
         this.path = path;
         this.left = left;
         this.right = right;
         this.pathIndex = pathIndex;
+        this.pathElements = pathElements;
     }
     public bool IsPathNotEmpty()
     {
@@ -45,9 +48,11 @@ public class Node
     {
         return path[(pathIndex - 1) < 0 ? 0 : (pathIndex - 1)];
     }
-    public void AddPosition(Vector2 position)
+    public void AddPosition(Vector2 position, RootBehaviour rootPrefab)
     {
+        RootBehaviour rootInstance = Instantiate<RootBehaviour>(rootPrefab, transform.position, Quaternion.identity);
         path.Add(position);
+        // pathElements.Add(rootInstance);
         pathIndex++;
     }
     public void Reset()
@@ -68,7 +73,7 @@ public class Node
     }
     public Node Copy()
     {
-        return new Node(path, left, right, pathIndex);
+        return new Node(path, left, right, pathIndex, pathElements);
     }
 }
 public class Tree
@@ -164,6 +169,8 @@ public class PlayerController : MonoBehaviour
     private State state = State.Exploring;
     private int rootCounter = 0;
 
+
+    public GameObject playerHead;
     [Tooltip("Speed in units/second")]
     public float movementSpeed;
     [Tooltip("Rotational speed in degrees per second")]
@@ -171,7 +178,7 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Max angle in degrees")]
     public int maxAngle;
     [Tooltip("Texture to draw a root")]
-    public RootBehaviour root;
+    public RootBehaviour rootPrefab;
 
     void Awake()
     {
@@ -187,6 +194,7 @@ public class PlayerController : MonoBehaviour
     {
         TriggerSplitBranch();
         UpdateMovementDirection();
+        playerHead.transform.up = movementDirection;
     }
 
     // All player movement happens here
@@ -209,8 +217,6 @@ public class PlayerController : MonoBehaviour
             else if (treeHistory.current.HasLeaves())
             {
                 treeHistory.SwitchBranch();
-                Debug.Log(treeHistory.current.pathIndex);
-                Debug.Log(treeHistory.current.path.Count);
                 transform.position = treeHistory.current.GetLatestPosition();
             }
             // And finally, if there are no old tendrils below your current one, you followed an old tendril to its end
@@ -225,7 +231,6 @@ public class PlayerController : MonoBehaviour
         if (state == State.Exploring)
         {
             transform.Translate(movementDirection);
-            // List<Vector2> path = treeHistory.current.path;
             treeHistory.current.AddPosition(transform.position);
             RootBehaviour instance = Instantiate<RootBehaviour>(root, transform.position, Quaternion.identity);
         }
