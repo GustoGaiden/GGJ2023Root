@@ -11,7 +11,7 @@ public class CollisionLogic : MonoBehaviour
         if (collision.collider.tag == "Cavern")
         {
             ResourceNode cavern = collision.gameObject.GetComponent<ResourceNode>();
-            cavern.ActivateResource();
+            cavern.ConsumeResource();
             // Debug.Log($"cavern {cavern.name} is now active" );
         }
         PlayerController.ResetForNewRun();
