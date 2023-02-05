@@ -189,15 +189,26 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GlobalVars.GameManager.CurrentMode != GameManager.GameMode.RunActive)
+        {
+            // The player does not currently have direct control. Don't do anything.
+            return;
+        }
+        
         MovePlayer();
     }
 
     void Update()
     {
+        if (GlobalVars.GameManager.CurrentMode != GameManager.GameMode.RunActive)
+        {
+            // The player does not currently have direct control. Don't do anything.
+            return;
+        }
+        
         TriggerSplitBranch();
         UpdateMovementDirection();
         Debug.Log(state);
-
     }
     void SetState(State newState)
     {
@@ -304,4 +315,5 @@ public class PlayerController : MonoBehaviour
         treeHistory.ResetToRoot();
         SetState(State.Traversing);
     }
+    
 }
