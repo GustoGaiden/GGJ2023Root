@@ -2031,8 +2031,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 496.01538, y: 275.90372}
-  m_SizeDelta: {x: 326.6308, y: 211.9875}
+  m_AnchoredPosition: {x: 217.24, y: 50.178017}
+  m_SizeDelta: {x: 326.6308, y: 100.3635}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &368112646
 MonoBehaviour:
@@ -3168,8 +3168,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 14.851, y: 290.7}
-  m_SizeDelta: {x: 635.7, y: 241.59}
+  m_AnchoredPosition: {x: 190.27982, y: 120.79}
+  m_SizeDelta: {x: 380.5596, y: 241.59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &696255983
 MonoBehaviour:
@@ -4035,7 +4035,7 @@ MonoBehaviour:
   JuiceDisplay: {fileID: 1613279939}
   CurrentMode: 0
   TutorialTextUI: {fileID: 696255983}
-  MusicOffTextUi: {fileID: 0}
+  MusicOffTextUi: {fileID: 368112648}
 --- !u!1001 &848290535
 PrefabInstance:
   m_ObjectHideFlags: 0
