@@ -17,7 +17,8 @@ public class GameManager : MonoBehaviour
     public GameMode CurrentMode;
     public TutorialText TutorialTextUI;
     public MusicOffText MusicOffTextUi;
-
+    public CameraManager CameraManager;
+    
     public enum GameMode {
         RunStart, // Waiting for player input
         RunStarting, // Start Animation Playing.
@@ -92,11 +93,13 @@ public class GameManager : MonoBehaviour
         ResetJuiceToMax();
         PlayerController.ResetForNewRun();
         TutorialTextUI.ShowTutorial();
+        CameraManager.ResetCameraToTop();
     }
     
     public void DepleteJuice() {
         float costPerSecond = DirtManager.GetCurrentJuiceCostPerSecond();
-        float costCurrentTime = costPerSecond * Time.fixedDeltaTime;
+        float traversalReduction = PlayerController.isTraversing() ? 0.25f : 1f;
+        float costCurrentTime = (costPerSecond * traversalReduction) * Time.fixedDeltaTime;
         Juice.CurrentJuice = Mathf.Max(Juice.CurrentJuice - costCurrentTime, 0f);
     }
 
@@ -123,6 +126,7 @@ public class GameManager : MonoBehaviour
         {
             CurrentMode = GameMode.RunActive;
             TutorialTextUI.HideTutorial();
+            CameraManager.SetCameraToDig();
         }
     }
 

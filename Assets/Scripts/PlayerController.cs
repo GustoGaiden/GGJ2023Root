@@ -407,4 +407,9 @@ public class PlayerController : MonoBehaviour
         SetState(State.Traversing);
         MovePlayer();
     }
+
+    public bool isTraversing()
+    {
+        return state == State.Traversing;
+    }
 }

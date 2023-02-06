@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 
 public enum ResourceNodeState {
@@ -11,6 +13,14 @@ public class ResourceNode : MonoBehaviour
 {
     public ResourceNodeState State = ResourceNodeState.AVAILABLE;
     public float MaxJuiceIncrease = 0.3f*Juice.InitialMaxJuice;
+
+    public void Start()
+    {
+        if (State == ResourceNodeState.STONE)
+        {
+            gameObject.transform.rotation = Quaternion.AngleAxis( Random.Range(0f,356f), Vector3.forward);            
+        }
+    }
 
     public void ConsumeResource()
     {
